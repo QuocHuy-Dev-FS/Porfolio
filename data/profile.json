@@ -1,0 +1,114 @@
+{
+  "site": {
+    "url": "https://quochuy-dev-fs.github.io/Porfolio/",
+    "locale": "en",
+    "themeColor": "#0f172a"
+  },
+  "person": {
+    "name": "Đoàn Quốc Huy",
+    "title": "Fullstack Developer",
+    "location": "Trảng Bảng, Tây Ninh",
+    "summary": "Fullstack developer building web apps with React, Next.js, and Supabase. Applies A* pathfinding, BLE positioning, and 3D visualization to real-world problems.",
+    "email": "doanquochuy.dev@gmail.com",
+    "links": {
+      "github": "https://github.com/QuocHuy-Dev-FS"
+    }
+  },
+  "skills": [
+    {
+      "group": "Frontend",
+      "items": ["Next.js 16", "React", "TypeScript", "Tailwind CSS", "Three.js", "JavaScript (ES modules)", "Vite", "HTML/CSS", "Framer Motion", "React Hook Form", "Zod", "date-fns"]
+    },
+    {
+      "group": "Backend / API",
+      "items": ["Supabase (PostgreSQL, Auth, RLS)", "Next.js API Route", "Node.js", "Python 3"]
+    },
+    {
+      "group": "Algorithms & Data",
+      "items": ["A* pathfinding", "multi-floor graph", "RSSI filtering", "log-distance regression", "OpenCV", "trimesh", "NumPy"]
+    },
+    {
+      "group": "Hardware / IoT",
+      "items": ["BLE iBeacon", "Web Bluetooth", "WebSocket"]
+    },
+    {
+      "group": "Testing / Quality",
+      "items": ["Vitest", "Node test runner", "Python unittest", "ESLint", "TypeScript strict"]
+    }
+  ],
+  "projects": [
+    {
+      "slug": "quan-ly-nhan-vien",
+      "name": "Employee Management",
+      "role": "Full-stack (sole developer)",
+      "summary": "Web app replacing paper shift rosters and Excel payroll sheets for small F&B outlets. Handles shift registration, weekly scheduling, and hourly pay calculation.",
+      "stack": ["Next.js 16", "React", "TypeScript", "Tailwind CSS", "Supabase", "PostgreSQL", "Vitest", "Framer Motion", "Zod"],
+      "visibility": "private"
+    },
+    {
+      "slug": "hospital-indoor-navigation",
+      "name": "Hospital Indoor Navigation",
+      "role": "Solo — design, development, data processing, testing",
+      "summary": "Prototype web app for navigating a multi-floor general hospital: 3D map, A* multi-floor routing, BLE beacon positioning, step-by-step voice guidance, and wheelchair path mode.",
+      "stack": ["JavaScript (ES modules)", "Three.js 0.186", "Vite 5", "HTML/CSS", "Python 3", "Web Bluetooth", "WebSocket", "Node.js"],
+      "highlights": [
+        {
+          "text": "Render a three-floor 3D map (Three.js) with floor switching, rotate/zoom, and room color-coding by type",
+          "source": "Hospital Indoor Navigation PORTFOLIO.md, section 5"
+        },
+        {
+          "text": "Implement A* multi-floor routing with elevator/stair transitions; wheelchair mode excludes stairs from the path",
+          "source": "Hospital Indoor Navigation PORTFOLIO.md, sections 4–5"
+        },
+        {
+          "text": "Bridge BLE beacon signals via Python (bleak) + WebSocket relay with pairing code to operate outside secure context on LAN",
+          "source": "Hospital Indoor Navigation PORTFOLIO.md, sections 5, 8"
+        },
+        {
+          "text": "Fall back to 2D SVG map when WebGL is unavailable (?force2d=1); include kiosk mode with enlarged text and touch targets",
+          "source": "Hospital Indoor Navigation PORTFOLIO.md, sections 4–5"
+        },
+        {
+          "text": "Build admin panel for technicians to view active beacons, assign positions on the 3D map, and record RSSI calibration data",
+          "source": "Hospital Indoor Navigation PORTFOLIO.md, section 5"
+        },
+        {
+          "text": "Build Python pipeline (OpenCV, trimesh) converting floor-plan images to 3D GLB models",
+          "source": "Hospital Indoor Navigation PORTFOLIO.md, section 5"
+        },
+        {
+          "text": "Deliver step-by-step voice guidance with off-route detection and signal-loss alerts",
+          "source": "Hospital Indoor Navigation PORTFOLIO.md, section 5"
+        }
+      ],
+      "metrics": [
+        {
+          "label": "Automated tests passed",
+          "value": "140/140",
+          "source": "Hospital Indoor Navigation PORTFOLIO.md, section 9"
+        },
+        {
+          "label": "Sample rooms (42 per floor, 3 floors)",
+          "value": "126",
+          "source": "Hospital Indoor Navigation PORTFOLIO.md, section 9"
+        },
+        {
+          "label": "Wheelchair routes verified stair-free",
+          "value": "78 / 84",
+          "source": "Hospital Indoor Navigation PORTFOLIO.md, section 9"
+        },
+        {
+          "label": "Beacon calibration + iBeacon decode tests (Python) passed",
+          "value": "24 + 13",
+          "source": "Hospital Indoor Navigation PORTFOLIO.md, section 9"
+        },
+        {
+          "label": "UI breakpoints tested",
+          "value": "375×667, 430×932, 768×1024, 1440×900",
+          "source": "Hospital Indoor Navigation PORTFOLIO.md, section 9"
+        }
+      ],
+      "visibility": "public"
+    }
+  ]
+}

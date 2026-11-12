@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://quochuy-dev-fs.github.io/Porfolio/sitemap.xml
