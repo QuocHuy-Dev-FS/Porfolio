@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://quochuy-dev-fs.github.io/Porfolio/</loc>
-    <lastmod>2026-11-12</lastmod>
+    <lastmod>2026-11-13</lastmod>
+  </url>
+  <url>
+    <loc>https://quochuy-dev-fs.github.io/Porfolio/projects/quan-ly-nhan-vien/</loc>
+    <lastmod>2026-11-13</lastmod>
   </url>
   <url>
     <loc>https://quochuy-dev-fs.github.io/Porfolio/projects/hospital-indoor-navigation/</loc>
-    <lastmod>2026-11-12</lastmod>
+    <lastmod>2026-11-13</lastmod>
+  </url>
+  <url>
+    <loc>https://quochuy-dev-fs.github.io/Porfolio/projects/hospital-quality-survey/</loc>
+    <lastmod>2026-11-13</lastmod>
   </url>
 </urlset>

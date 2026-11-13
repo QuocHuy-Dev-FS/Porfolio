@@ -63,6 +63,34 @@ projects.forEach((pr, i) => {
 
 (data?.experience || []).forEach((e, i) => (e?.bullets || []).forEach((b, j) => prose(`experience[${i}].bullets[${j}]`, b)));
 
+// Khóa mở rộng (tùy chọn): có thì phải hợp lệ.
+const CATEGORIES = ['web', 'mobile', 'api', 'open-source'];
+projects.forEach((pr, i) => {
+  if (pr?.category !== undefined) need(CATEGORIES.includes(pr.category), `projects[${i}].category phải thuộc: ${CATEGORIES.join(', ')}`);
+});
+
+if (p.about !== undefined) {
+  need(Array.isArray(p.about) && p.about.every((t) => typeof t === 'string' && t), 'person.about phải là mảng chuỗi không rỗng');
+  (Array.isArray(p.about) ? p.about : []).forEach((t, i) => prose(`person.about[${i}]`, t));
+}
+if (p.resume !== undefined) need(typeof p.resume === 'string' && /^assets\/[\w.-]+\.pdf$/.test(p.resume), 'person.resume phải có dạng assets/<tên>.pdf');
+if (p.available !== undefined) need(typeof p.available === 'boolean', 'person.available phải là true/false');
+prose('person.tagline', p.tagline);
+
+(data?.traits || []).forEach((t, i) => prose(`traits[${i}]`, t));
+(data?.services || []).forEach((s, i) => {
+  need(s?.title && s?.description, `services[${i}] cần title và description`);
+  prose(`services[${i}].description`, s?.description);
+});
+(data?.stats || []).forEach((s, i) => need(s?.value && s?.label && s?.source, `stats[${i}] cần value, label, source`));
+(data?.skillLevels || []).forEach((s, i) => need(s?.label && s?.value && s?.source, `skillLevels[${i}] cần label, value, source`));
+// Lời nhận xét là lời trích của người khác nên không kiểm từ sáo rỗng/con số.
+(data?.testimonials || []).forEach((t, i) => need(t?.quote && t?.author && t?.source, `testimonials[${i}] cần quote, author, source`));
+(data?.pricing || []).forEach((t, i) => {
+  need(t?.name && t?.price && t?.source, `pricing[${i}] cần name, price, source`);
+  prose(`pricing[${i}].description`, t?.description);
+});
+
 if (errors.length) {
   process.stderr.write(`Lint data/profile.json phát hiện ${errors.length} lỗi. Hãy sửa trong profile.json:\n- ${errors.join('\n- ')}\n`);
   process.exit(2);

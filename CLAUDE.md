@@ -54,6 +54,15 @@ Hai agent chạy song song không bao giờ được ghi cùng một file.
     }
   ],
   "experience": [ { "org": "", "role": "", "period": "", "bullets": ["..."] } ],
-  "education": [ { "school": "", "degree": "", "period": "" } ]
+  "education": [ { "school": "", "degree": "", "period": "" } ],
+
+  "traits": ["..."],
+  "services": [ { "title": "", "description": "", "icon": "" } ],
+  "stats": [ { "icon": "", "value": "", "label": "", "source": "" } ],
+  "skillLevels": [ { "label": "", "value": "", "source": "" } ],
+  "testimonials": [ { "quote": "", "author": "", "role": "", "source": "" } ],
+  "pricing": [ { "name": "", "price": "", "unit": "", "description": "", "features": ["..."], "popular": false, "source": "" } ],
+  "pricingPerks": ["..."]
 }
+Khóa tùy chọn mở rộng (bố cục kiểu manhnguyen18): `person.about[]` (các đoạn giới thiệu), `person.tagline`, `person.available` (boolean), `person.resume` (đường dẫn như `assets/cv.pdf`), `person.phone`, và `projects[].category` (`web` | `mobile` | `api` | `open-source`). Các khối `stats`, `skillLevels`, `testimonials`, `pricing` chỉ được render khi có dữ liệu thật kèm `source`; mọi con số nằm trong trường có `source`.
 Trường nào chưa có dữ kiện thì bỏ hẳn khóa đó, đừng điền giả. `person.name`, `person.title`, `person.summary`, và mỗi dự án phải có `slug`, `name`, `summary`, `stack`, `visibility`.

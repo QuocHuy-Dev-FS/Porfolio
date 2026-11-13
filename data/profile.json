@@ -11,7 +11,8 @@
     "summary": "Fullstack developer building web apps with React, Next.js, and Supabase. Applies A* pathfinding, BLE positioning, and 3D visualization to real-world problems.",
     "email": "doanquochuy.dev@gmail.com",
     "links": {
-      "github": "https://github.com/QuocHuy-Dev-FS"
+      "github": "https://github.com/QuocHuy-Dev-FS",
+      "linkedin": "https://www.linkedin.com/in/huy-%C4%91o%C3%A0n-077089432"
     }
   },
   "skills": [
@@ -42,8 +43,53 @@
       "name": "Employee Management",
       "role": "Full-stack (sole developer)",
       "summary": "Web app replacing paper shift rosters and Excel payroll sheets for small F&B outlets. Handles shift registration, weekly scheduling, and hourly pay calculation.",
-      "stack": ["Next.js 16", "React", "TypeScript", "Tailwind CSS", "Supabase", "PostgreSQL", "Vitest", "Framer Motion", "Zod"],
-      "visibility": "private"
+      "stack": ["Next.js 16", "React", "TypeScript", "Tailwind CSS", "Supabase", "PostgreSQL", "Vitest", "Framer Motion", "React Hook Form", "Zod", "date-fns", "ESLint"],
+      "highlights": [
+        {
+          "text": "Enforce multi-layer security: route proxy + server-side layout guard (requireAuth/requireAdmin) + RLS on Postgres; migrate policies from anon to authenticated; verify anon INSERT returns 401 and anon SELECT returns empty array",
+          "source": "Manager-Project/PORTFOLIO.md, section 7"
+        },
+        {
+          "text": "Implement role-based access via app_metadata.role; run role-change API server-side with Service Role Key only",
+          "source": "Manager-Project/PORTFOLIO.md, section 7"
+        },
+        {
+          "text": "Version the database with SQL migrations covering salary/schedule expansion, account linking, shift registration, notifications, and payroll confirmation",
+          "source": "Manager-Project/PORTFOLIO.md, section 7"
+        },
+        {
+          "text": "Cover business logic with unit tests: shift-hour calculation by role, monthly totals, money formatting, and registration-to-approval-to-payroll flow",
+          "source": "Manager-Project/PORTFOLIO.md, section 7"
+        },
+        {
+          "text": "Apply CSS token design system; maintain text contrast at WCAG AA level; set touch targets to minimum 44px; support responsive layouts at 375/768/1024/1440px with no horizontal scroll",
+          "source": "Manager-Project/PORTFOLIO.md, section 7"
+        }
+      ],
+      "metrics": [
+        {
+          "label": "Vitest unit tests passed",
+          "value": "83/83",
+          "source": "Manager-Project/PORTFOLIO.md, section 9"
+        },
+        {
+          "label": "TypeScript compilation errors",
+          "value": "0",
+          "source": "Manager-Project/PORTFOLIO.md, section 9"
+        },
+        {
+          "label": "Git commits",
+          "value": "46",
+          "source": "Manager-Project/PORTFOLIO.md, section 4"
+        },
+        {
+          "label": "SQL migrations",
+          "value": "6",
+          "source": "Manager-Project/PORTFOLIO.md, section 7"
+        }
+      ],
+      "category": "web",
+      "visibility": "public"
     },
     {
       "slug": "hospital-indoor-navigation",
@@ -108,6 +154,55 @@
           "source": "Hospital Indoor Navigation PORTFOLIO.md, section 9"
         }
       ],
+      "category": "web",
+      "visibility": "public"
+    },
+    {
+      "slug": "hospital-quality-survey",
+      "name": "Hospital Quality Survey",
+      "role": "Fullstack Developer",
+      "summary": "Patient satisfaction kiosk and quality management portal built for a Grade-I hospital. Survey flow covers department selection, criteria rating, and NPS; admin dashboard tracks KPIs, charts, and complaints.",
+      "stack": ["Next.js 16.4", "React 19.3", "TypeScript", "Tailwind CSS 4", "Supabase", "PostgreSQL", "Supabase Auth", "Recharts 3", "Lucide React", "ESLint 9", "Node.js"],
+      "highlights": [
+        {
+          "text": "Resolve department-code mismatches with a multi-step resolveDepartment function (exact → prefix → name → static map); verify correctness with a custom test script without altering DB data",
+          "source": "CV_PORTFOLIO_hospital-quality-survey.md, section 5"
+        },
+        {
+          "text": "Enforce two-layer security at server and DB level, not only in UI; apply migration for secure feedback table and status-history tracking",
+          "source": "CV_PORTFOLIO_hospital-quality-survey.md, section 5"
+        },
+        {
+          "text": "Design for public kiosk use: large touch targets, custom TouchNumpad, KioskIdleTimer auto-reset, and countdown screen after submission",
+          "source": "CV_PORTFOLIO_hospital-quality-survey.md, section 4"
+        },
+        {
+          "text": "Configure survey forms in the database; maintain surveyFallback so the kiosk works when the API is unavailable",
+          "source": "CV_PORTFOLIO_hospital-quality-survey.md, section 4"
+        },
+        {
+          "text": "Write idempotent SQL migrations; export complaint data as CSV with UTF-8 BOM for correct Vietnamese character display in Excel",
+          "source": "CV_PORTFOLIO_hospital-quality-survey.md, section 5"
+        }
+      ],
+      "metrics": [
+        {
+          "label": "Department-code mapping tests passed",
+          "value": "27/27",
+          "source": "CV_PORTFOLIO_hospital-quality-survey.md, section 5"
+        },
+        {
+          "label": "SQL migrations",
+          "value": "4",
+          "source": "CV_PORTFOLIO_hospital-quality-survey.md, section 4"
+        },
+        {
+          "label": "Departments listed in kiosk info modal",
+          "value": "13",
+          "source": "CV_PORTFOLIO_hospital-quality-survey.md, section 4"
+        }
+      ],
+      "category": "web",
       "visibility": "public"
     }
   ]

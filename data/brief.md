@@ -1,149 +1,122 @@
 # Brief portfolio
 
 ## Mục tiêu (1 câu)
-Dựng mới toàn bộ trang portfolio tĩnh (HTML/CSS/JS thuần, không dependency) cho một fullstack developer, lấy bố cục và phong cách từ reference/devportfolio làm mẫu, xuất bản trên GitHub Pages, dùng để xin việc và nhận dự án freelance.
+Bổ sung hai dự án mới (Hospital Quality Survey và Employee Shift & Payroll) vào mảng `projects[]` trong `data/profile.json`, giữ nguyên dự án hospital-indoor-navigation và toàn bộ dữ liệu hiện tại.
 
 ## Đối tượng đọc và mục đích
 - Nhà tuyển dụng kỹ thuật: đánh giá năng lực qua dự án thực, stack, vai trò cụ thể.
 - Khách hàng freelance: xác nhận khả năng giao việc, xem demo/repo.
-- Ngôn ngữ site: `en` (theo lựa chọn của người dùng trong inputs.md).
+- Ngôn ngữ site: `en` (theo `site.locale` trong profile.json).
 
 ## Phạm vi và ngoài phạm vi
 **Trong phạm vi:**
-- Các mục theo reference/devportfolio: Hero, About, Projects, Experience, Education, Header, Footer.
-- Dữ liệu từ `data/inputs.md` và 2 file PORTFOLIO.md được chỉ định.
-- Dự án công khai duy nhất: "Hospital Indoor Navigation" (visibility = public).
-- Dự án "Quản lý nhân viên" (visibility = private): ghi vào `data/profile.json` nhưng KHÔNG xuất hiện trong `docs/`; không làm nổi bật số liệu của nó trên site.
-- Màu nhấn qua biến CSS (không phụ thuộc framework Tailwind của mẫu).
-- Font monospace dùng font-stack hệ thống (không CDN, không font ngoài).
-- Nếu chép đoạn code từ mẫu: giữ nguyên ghi chú bản quyền MIT.
+- Trích xuất dữ kiện từ hai file nguồn vào `data/evidence.md` (project-miner).
+- Thêm hai entry project vào `data/profile.json` (content-writer).
+- Build lại `docs/` và chạy check (frontend-builder).
+- Kiểm định toàn bộ output (qa-auditor).
 
 **Ngoài phạm vi:**
-- Không dùng Astro, Tailwind, bất kỳ package/CDN nào.
-- Không git commit, push, deploy, bật GitHub Pages khi chưa được phép rõ ràng trong phiên.
-- Không tạo nhiều trang (SPA một trang).
-- Không analytics, không tracking.
+- Không thay đổi thiết kế, templates, tokens.css (ui-designer không chạy).
+- Không thêm section mới vào giao diện.
+- Không thay đổi dự án hospital-indoor-navigation hiện có.
+- Không git commit, push, deploy, bật GitHub Pages khi chưa được phép rõ ràng.
+- Không điền links.repo / links.demo (bỏ hẳn khóa `links` cho cả hai dự án mới).
+- Không đưa tên "Bệnh viện Quân y 7A", email quản trị, dữ liệu `.env.local`, feedbacks.json thật vào bất kỳ file output nào.
 
 ## Ràng buộc (từ CLAUDE.md + yêu cầu này)
-1. HTML/CSS/JS thuần; Node 18+ chỉ chạy `scripts/build.mjs` và `scripts/check.mjs`.
-2. `docs/` chỉ sinh ra qua `node scripts/build.mjs`; không sửa tay.
-3. Không bịa dữ kiện; chỉ dùng dữ liệu xác minh được trong `data/evidence.md`.
+1. Không bịa. Chỉ dùng dữ kiện xác minh được trong `data/evidence.md`.
+2. Mọi con số nằm trong `metrics[]` hoặc `highlights[]` kèm `source` (tên file nguồn).
+3. Không điền trường có giá trị giả ("", "...", "TODO", null).
 4. Dự án `visibility: "private"` không xuất hiện trong `docs/`.
-5. Mọi số liệu phải nằm trong `metrics[]` hoặc `highlights[]` kèm `source`.
-6. Văn phong ngắn, cụ thể, tránh từ sáo rỗng.
-7. Không secret, token, dữ liệu cá nhân của người khác.
-8. Nếu chép đoạn code từ reference/devportfolio: giữ ghi chú bản quyền MIT.
-9. Không chạy script hay cài package của mẫu (chỉ đọc để tham chiếu bố cục).
-10. Tên bệnh viện trong dự án "Hospital Indoor Navigation": KHÔNG nêu tên cụ thể "Bệnh viện Quân y 7A" — dùng mô tả chung "a general hospital" (locale=en). Đây là mặc định thận trọng, chờ xác nhận của người dùng.
-11. `site.url` dùng placeholder `https://quochuy-dev-fs.github.io/Porfolio/` (suy ra từ tên repo); publisher phải nhắc xác nhận trước khi deploy.
+5. Không tên bệnh viện cụ thể trong bất kỳ file output nào — dùng "a Grade-I hospital".
+6. Hospital Quality Survey: vai trò chỉ ghi "Fullstack Developer" (file nguồn chưa xác nhận solo hay nhóm); không ghi thời gian (file nguồn ghi "[CẦN BỔ SUNG]").
+7. Manager Project (Employee Shift & Payroll): thời gian "09/2026 – 11/2026", vai trò "Full-stack (sole developer)" — đúng như file nguồn ghi.
+8. `category: "web"` cho cả hai dự án mới.
+9. Hai dự án mới đều `visibility: "public"`.
+10. Văn phong tiếng Anh, ngắn, cụ thể, động từ rõ ràng; tránh từ sáo rỗng.
+11. `docs/` chỉ sinh ra qua `node scripts/build.mjs`; không sửa tay.
 
 ## Agent cần chạy
 Wave 1: project-miner
-Wave 2: ui-designer | content-writer (song song)
-Wave 3: frontend-builder (giai đoạn 1: dựng khung)
-Wave 4: frontend-builder (giai đoạn 2: build)
-Wave 5: qa-auditor
-Wave 6: publisher
+Wave 2: content-writer
+Wave 3: frontend-builder (build + check)
+Wave 4: qa-auditor
 
 ## Nhiệm vụ từng agent
 
 ### project-miner
-- **Mục tiêu:** Đọc 2 file PORTFOLIO.md được chỉ định và `data/inputs.md`; trích xuất dữ kiện thô có thể kiểm chứng (tên dự án, vai trò, stack, highlights, metrics kèm source, links repo/demo, thông tin cá nhân, kinh nghiệm, học vấn).
+- **Mục tiêu:** Đọc hai file nguồn, trích xuất dữ kiện có thể xác minh (stack, số liệu có nguồn, tính năng chính, điểm kỹ thuật) của hai dự án mới; bổ sung vào `data/evidence.md` mà không xóa dữ kiện cũ.
 - **Đọc:**
+  - `D:\Workplace\hospital-quality-survey\CV_PORTFOLIO_hospital-quality-survey.md`
   - `D:\Workplace\Manager-Project\PORTFOLIO.md`
-  - `D:\Workplace\Hospital Indoor Navigation\docs\PORTFOLIO.md`
-  - `D:\Workplace\Portfolio\data\inputs.md`
+  - `data/evidence.md` (để bổ sung, giữ nguyên phần cũ)
 - **Ghi:** `data/evidence.md`
 - **Nghiệm thu:**
-  - Mỗi dữ kiện có nguồn (tên file, section hoặc URL).
+  - Mỗi dữ kiện mới ghi rõ nguồn (tên file + section).
+  - Hai dự án mới có section riêng trong evidence.md.
+  - Dữ liệu cũ (hospital-indoor-navigation, thông tin cá nhân) còn nguyên.
+  - Không ghi tên "Bệnh viện Quân y 7A"; ghi "a Grade-I hospital" hoặc "bệnh viện hạng I" trong phần mô tả nội bộ evidence.
+  - Chỉ ghi số liệu có nguồn rõ ràng trong file nguồn: 27/27 test PASS, 83 test Vitest, 4 migration (Hospital Quality Survey), 6 migration, 46 commit (Manager Project), 13 departments (Hospital Quality Survey). Bỏ mọi mục [CẦN BỔ SUNG].
+  - Ghi rõ ràng: Hospital Quality Survey chưa có thời gian xác nhận, vai trò chưa xác nhận solo/nhóm.
   - Không có thông tin bịa thêm ngoài nguồn.
-  - Ghi rõ: "Quản lý nhân viên" = private, "Hospital Indoor Navigation" = public.
-  - Với "Hospital Indoor Navigation": KHÔNG ghi tên bệnh viện cụ thể; dùng mô tả chung và ghi chú "tên bệnh viện chờ xác nhận người dùng".
-  - `data/evidence.md` tồn tại và không rỗng.
-
-### ui-designer
-- **Mục tiêu:** Xác định hệ thống design token (màu, typography, spacing, breakpoint) và bố cục từng mục dựa trên reference/devportfolio; toàn bộ dùng CSS variable, font-stack hệ thống monospace.
-- **Đọc:**
-  - `reference/devportfolio/src/styles/global.css`
-  - `reference/devportfolio/src/components/*.astro` (đọc để tham chiếu bố cục, không chạy)
-  - `reference/devportfolio/LICENSE.md` (xác nhận giấy phép MIT trước khi tham chiếu code)
-  - `data/inputs.md` (themeColor hint: `#0f172a`)
-- **Ghi:** `data/design.md`, `templates/tokens.css`
-- **Nghiệm thu:**
-  - `tokens.css` chỉ chứa CSS custom properties (`:root { --... }`), không import ngoài.
-  - `design.md` mô tả wireframe text cho 8 mục (Header, Hero, About, Skills, Projects, Experience, Education, Footer) đủ để frontend-builder dựng khung không cần hỏi lại.
-  - Màu nhấn lấy từ biến `--color-accent`, không hardcode hex trong template.
-  - Nếu chép CSS từ mẫu: giữ ghi chú bản quyền MIT.
 
 ### content-writer
-- **Mục tiêu:** Chuẩn hóa toàn bộ dữ liệu từ `data/evidence.md` thành `data/profile.json` đúng schema CLAUDE.md; ngôn ngữ nội dung `en`; không bịa.
-- **Đọc:** `data/evidence.md`, `data/inputs.md`, `CLAUDE.md` (schema)
+- **Mục tiêu:** Thêm hai entry project mới vào mảng `projects[]` trong `data/profile.json`; giữ nguyên mọi dữ liệu hiện có.
+- **Đọc:**
+  - `data/evidence.md` (nguồn duy nhất để lấy dữ kiện)
+  - `data/profile.json` (để bổ sung, không xóa gì)
+  - `data/brief.md` (ràng buộc nội dung và schema)
 - **Ghi:** `data/profile.json`
 - **Nghiệm thu:**
-  - `site.locale` = `"en"`.
-  - `site.url` = `"https://quochuy-dev-fs.github.io/Porfolio/"` (placeholder; ghi chú cần xác nhận).
-  - `person.name`, `person.title`, `person.summary` đều có giá trị.
-  - Mỗi dự án có đủ `slug`, `name`, `summary`, `stack`, `visibility`.
-  - "Quản lý nhân viên": `"visibility": "private"` — ghi vào profile.json nhưng không được xuất hiện trong docs/; không cần metrics/highlights chi tiết.
-  - "Hospital Indoor Navigation": `"visibility": "public"` — đây là dự án công khai duy nhất trên site.
-  - Tên bệnh viện trong summary/highlights của "Hospital Indoor Navigation": dùng "a general hospital" (KHÔNG ghi "Bệnh viện Quân y 7A").
-  - Không có trường nào điền giả ("", "...", "TODO").
-  - JSON hợp lệ (parse không lỗi).
+  - Mảng `projects[]` có đúng 3 entry sau khi ghi: hospital-indoor-navigation (giữ nguyên), hospital-quality-survey (mới), quan-ly-nhan-vien (giữ nguyên — private).
+  - Dự án hospital-indoor-navigation không bị thay đổi bất kỳ trường nào.
+  - Dự án quan-ly-nhan-vien (Employee Management, private) không bị thay đổi.
+  - **hospital-quality-survey:**
+    - `slug`: `"hospital-quality-survey"`
+    - `name`: `"Hospital Quality Survey"`
+    - `role`: `"Fullstack Developer"` (không ghi thời gian vì chưa xác nhận)
+    - `summary`: 1–2 câu tiếng Anh, không nhắc tên bệnh viện cụ thể, dùng "a Grade-I hospital"
+    - `stack`: lấy từ evidence.md (Next.js 16, React 19, Tailwind CSS 4, Supabase, PostgreSQL, Recharts, ESLint)
+    - `highlights[]`: tối đa 5 mục, mỗi mục kèm `source: "CV_PORTFOLIO_hospital-quality-survey.md"`
+    - `metrics[]`: chỉ điền `{ "label": "Department mapping tests", "value": "27/27 PASS", "source": "CV_PORTFOLIO_hospital-quality-survey.md, section 5" }` và `{ "label": "SQL migrations", "value": "4", "source": "CV_PORTFOLIO_hospital-quality-survey.md, section 4" }` và `{ "label": "Departments covered", "value": "13", "source": "CV_PORTFOLIO_hospital-quality-survey.md, section 4" }`
+    - `category`: `"web"`
+    - `visibility`: `"public"`
+    - Không có khóa `links`
+  - **quan-ly-nhan-vien (Employee Shift & Payroll — tên mới):** xem ghi chú phía dưới.
+    - Lưu ý: dự án quan-ly-nhan-vien hiện đang `visibility: "private"`. Người dùng CHƯA yêu cầu chuyển sang public. Giữ nguyên `visibility: "private"`. Nếu content-writer muốn thêm metrics/highlights từ PORTFOLIO.md vào entry này (để sẵn khi sau đổi public), được phép — nhưng KHÔNG đổi visibility.
+    - Nếu bổ sung dữ liệu cho quan-ly-nhan-vien: `highlights[]` và `metrics[]` lấy từ evidence.md, kèm `source: "Manager-Project/PORTFOLIO.md"`. Các số liệu: 83 test Vitest pass, 46 commits, 6 SQL migrations, period "09/2026 – 11/2026".
+  - JSON hợp lệ, parse không lỗi.
+  - Không trường nào điền giả ("", "...", "TODO", null).
+  - `site.locale` vẫn là `"en"`.
 
-### frontend-builder (giai đoạn 1: dựng khung)
-- **Mục tiêu:** Tạo cấu trúc file template và script build; dựng khung HTML/CSS theo design.md và tokens.css; chưa điền dữ liệu động từ profile.json.
-- **Đọc:**
-  - `data/design.md`
-  - `templates/tokens.css`
-  - `reference/devportfolio/src/components/*.astro` (tham chiếu bố cục, không chạy)
-  - `reference/devportfolio/LICENSE.md`
-- **Ghi:** `templates/index.html` (template với placeholder), `scripts/build.mjs`, `scripts/check.mjs`
-- **Nghiệm thu:**
-  - `templates/index.html` có đủ 8 section: Header, Hero, About, Skills, Projects, Experience, Education, Footer.
-  - `scripts/build.mjs` đọc `data/profile.json` + `templates/`, sinh ra `docs/index.html` và copy assets; chạy `node scripts/build.mjs` không lỗi (kiểm tra sau khi profile.json đã có dữ liệu).
-  - `scripts/check.mjs` kiểm tra tối thiểu: JSON hợp lệ, trường bắt buộc có mặt, không có dự án private trong output.
-  - Không CDN, không import ngoài trong template/script.
-  - Nếu chép code từ mẫu: giữ ghi chú MIT.
-
-### frontend-builder (giai đoạn 2: build)
-- **Mục tiêu:** Chạy build thật để sinh `docs/`; kiểm tra output bằng `scripts/check.mjs`.
-- **Đọc:** `data/profile.json`, `templates/*`, `scripts/*`
+### frontend-builder (giai đoạn build + check)
+- **Mục tiêu:** Chạy build để sinh lại `docs/` với dữ liệu mới; chạy check để xác minh không lỗi.
+- **Đọc:** `data/profile.json`, `templates/*`, `scripts/build.mjs`, `scripts/check.mjs`
 - **Ghi:** `docs/` (qua `node scripts/build.mjs`)
 - **Nghiệm thu:**
-  - `node scripts/build.mjs` chạy không lỗi, sinh ra `docs/index.html`.
+  - `node scripts/build.mjs` chạy không lỗi.
   - `node scripts/check.mjs` chạy không lỗi, không cảnh báo critical.
-  - `docs/index.html` chứa tên người dùng và dự án "Hospital Indoor Navigation" (dự án public duy nhất).
-  - Không có dự án `visibility: "private"` ("Quản lý nhân viên") trong `docs/index.html`.
-  - Không có placeholder còn sót (`{{`, `__TODO__`, v.v.).
-  - Không có chuỗi "Bệnh viện Quân y 7A" trong docs/.
+  - `docs/index.html` chứa dự án "Hospital Quality Survey".
+  - `docs/projects/hospital-quality-survey/index.html` tồn tại và không rỗng.
+  - Không có chuỗi "Bệnh viện Quân y 7A" trong bất kỳ file nào trong `docs/`.
+  - Dự án quan-ly-nhan-vien (`visibility: "private"`) KHÔNG xuất hiện trong `docs/`.
+  - Không có placeholder còn sót (`{{`, `__TODO__`) trong `docs/`.
+  - Dự án hospital-indoor-navigation vẫn còn trong `docs/index.html`.
 
 ### qa-auditor
-- **Mục tiêu:** Kiểm tra toàn bộ output: nội dung, kỹ thuật, bản quyền.
-- **Đọc:** `docs/index.html`, `data/profile.json`, `data/evidence.md`, `templates/*`, `scripts/*`, `reference/devportfolio/LICENSE.md`
+- **Mục tiêu:** Kiểm định output sau khi thêm hai dự án mới: nội dung đúng nguồn, không lộ thông tin nhạy cảm, build ổn định.
+- **Đọc:** `docs/index.html`, `docs/projects/hospital-quality-survey/index.html`, `docs/projects/hospital-indoor-navigation/index.html`, `data/profile.json`, `data/evidence.md`
 - **Ghi:** `data/qa-report.md`
 - **Nghiệm thu (checklist tối thiểu):**
-  - Không có dữ kiện bịa (đối chiếu evidence.md).
-  - Không có dự án "Quản lý nhân viên" (private) trong docs/.
-  - Không có chuỗi "Bệnh viện Quân y 7A" trong docs/ (tên bệnh viện chưa được xác nhận công khai).
-  - Mọi số liệu kèm source trong profile.json.
-  - Không có CDN/font ngoài/dependency trong docs/ hoặc templates/.
-  - HTML parse được, không thẻ mở không đóng.
-  - Nếu có đoạn code chép từ mẫu: ghi chú MIT còn nguyên.
-  - LinkedIn URL không chứa ký tự diacritics chưa encode (huy-đoàn → cần encode hoặc xác nhận URL thực).
+  - Không có chuỗi "Bệnh viện Quân y 7A" trong `docs/`.
+  - Không có dự án quan-ly-nhan-vien trong `docs/` (visibility: private).
+  - Dự án hospital-indoor-navigation vẫn hiện trong `docs/index.html` và trang chi tiết.
+  - Dự án hospital-quality-survey xuất hiện trong `docs/index.html` và có trang chi tiết.
+  - Mọi số liệu trong profile.json kèm `source`.
+  - Không có trường bịa (giá trị rỗng "", "...", "TODO").
+  - Không CDN, font ngoài, dependency ngoài trong `docs/`.
+  - JSON profile.json hợp lệ.
   - `qa-report.md` liệt kê rõ: passed / warning / failed cho từng mục.
-  - Ghi warning nếu `site.url` vẫn là placeholder (chưa được người dùng xác nhận).
-
-### publisher
-- **Mục tiêu:** Hướng dẫn người dùng các bước deploy thủ công lên GitHub Pages; không tự deploy.
-- **Đọc:** `data/qa-report.md`, `data/profile.json`, `data/inputs.md`
-- **Ghi:** `README.md`, `data/publish-steps.md`
-- **Nghiệm thu:**
-  - `publish-steps.md` liệt kê từng bước cụ thể (tạo repo, push, bật Pages, kiểm tra URL).
-  - Bước đầu tiên trong publish-steps.md: nhắc người dùng xác nhận URL GitHub Pages thực tế trước khi push (placeholder hiện tại: `https://quochuy-dev-fs.github.io/Porfolio/`).
-  - Bước trong publish-steps.md: nhắc người dùng xác nhận tên bệnh viện có được nêu công khai không, nếu có thì cập nhật `data/inputs.md` và chạy lại content-writer + build.
-  - `README.md` mô tả dự án, cách build local, cách cập nhật nội dung.
-  - Không chứa secret hay token.
-  - Không tự chạy git push hay deploy.
 
 ## Câu hỏi bắt buộc
-Không có.
+(Không có — người dùng đã trả lời đủ.)

@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Employee Management — Đoàn Quốc Huy</title>
+  <meta name="description" content="Web app replacing paper shift rosters and Excel payroll sheets for small F&amp;B outlets. Handles shift registration, weekly scheduling, and hourly pay calculation.">
+  <link rel="canonical" href="https://quochuy-dev-fs.github.io/Porfolio/projects/quan-ly-nhan-vien/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Employee Management — Đoàn Quốc Huy">
+  <meta property="og:description" content="Web app replacing paper shift rosters and Excel payroll sheets for small F&amp;B outlets. Handles shift registration, weekly scheduling, and hourly pay calculation.">
+  <meta property="og:url" content="https://quochuy-dev-fs.github.io/Porfolio/projects/quan-ly-nhan-vien/">
+  <meta property="og:image" content="https://quochuy-dev-fs.github.io/Porfolio/assets/og-image.svg">
+  <meta property="og:image:alt" content="Employee Management — Đoàn Quốc Huy">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://quochuy-dev-fs.github.io/Porfolio/assets/og-image.svg">
+  <meta name="theme-color" content="#0f172a">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Đoàn Quốc Huy","url":"https://quochuy-dev-fs.github.io/Porfolio/","jobTitle":"Fullstack Developer","email":"doanquochuy.dev@gmail.com","sameAs":["https://github.com/QuocHuy-Dev-FS","https://www.linkedin.com/in/huy-%C4%91o%C3%A0n-077089432"]}</script>
+  <link rel="stylesheet" href="../../assets/style.css">
+  <script>document.documentElement.classList.add('js-on')</script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div class="scroll-progress" aria-hidden="true"><div class="scroll-progress__fill"></div></div>
+
+    <header class="site-header" role="banner">
+    <nav class="nav container" aria-label="Main navigation">
+      <a href="../../#hero" class="nav-logo" aria-label="Đoàn Quốc Huy — home">QH</a>
+      <ul class="nav-links" role="list">
+          <li><a href="../../#about">About</a></li>
+          <li><a href="../../#skills">Skills</a></li>
+          <li><a href="../../#portfolio">Portfolio</a></li>
+          <li><a href="../../#contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="../../#contact" class="btn-primary">Hire Me</a>
+        <button
+          class="hamburger"
+          aria-controls="nav-drawer"
+          aria-expanded="false"
+          aria-label="Open navigation menu"
+        ><span></span><span></span><span></span></button>
+      </div>
+    </nav>
+  </header>
+  <div id="nav-drawer" class="nav-drawer" role="navigation" aria-label="Mobile navigation">
+    <ul>
+        <li><a href="../../#about">About</a></li>
+        <li><a href="../../#skills">Skills</a></li>
+        <li><a href="../../#portfolio">Portfolio</a></li>
+        <li><a href="../../#contact">Contact</a></li>
+    </ul>
+  </div>
+
+  <main id="main-content">
+    <article class="project-detail container" aria-labelledby="project-h1">
+      <a href="../../#portfolio" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+        Back to Portfolio
+      </a>
+
+      <header class="project-detail__header">
+        <h1 id="project-h1" class="project-detail__h1">Employee Management</h1>
+        <p class="project-detail__meta">Full-stack (sole developer)</p>
+        <div class="project-detail__stack">
+          <span class="chip">Next.js 16</span>
+          <span class="chip">React</span>
+          <span class="chip">TypeScript</span>
+          <span class="chip">Tailwind CSS</span>
+          <span class="chip">Supabase</span>
+          <span class="chip">PostgreSQL</span>
+          <span class="chip">Vitest</span>
+          <span class="chip">Framer Motion</span>
+          <span class="chip">React Hook Form</span>
+          <span class="chip">Zod</span>
+          <span class="chip">date-fns</span>
+          <span class="chip">ESLint</span>
+        </div>
+      </header>
+
+      <div class="project-detail__section">
+        <h2>Overview</h2>
+        <p class="project-detail__summary">Web app replacing paper shift rosters and Excel payroll sheets for small F&amp;B outlets. Handles shift registration, weekly scheduling, and hourly pay calculation.</p>
+      </div>
+
+      <div class="project-detail__section">
+        <h2>Highlights</h2>
+        <ul class="project-detail__highlights">
+          <li>Enforce multi-layer security: route proxy + server-side layout guard (requireAuth/requireAdmin) + RLS on Postgres; migrate policies from anon to authenticated; verify anon INSERT returns 401 and anon SELECT returns empty array</li>
+          <li>Implement role-based access via app_metadata.role; run role-change API server-side with Service Role Key only</li>
+          <li>Version the database with SQL migrations covering salary/schedule expansion, account linking, shift registration, notifications, and payroll confirmation</li>
+          <li>Cover business logic with unit tests: shift-hour calculation by role, monthly totals, money formatting, and registration-to-approval-to-payroll flow</li>
+          <li>Apply CSS token design system; maintain text contrast at WCAG AA level; set touch targets to minimum 44px; support responsive layouts at 375/768/1024/1440px with no horizontal scroll</li>
+        </ul>
+      </div>
+      <div class="project-detail__section">
+        <h2>Metrics</h2>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <p class="metric-value">83/83</p>
+            <p class="metric-label">Vitest unit tests passed</p>
+          </div>
+          <div class="metric-card">
+            <p class="metric-value">0</p>
+            <p class="metric-label">TypeScript compilation errors</p>
+          </div>
+          <div class="metric-card">
+            <p class="metric-value">46</p>
+            <p class="metric-label">Git commits</p>
+          </div>
+          <div class="metric-card">
+            <p class="metric-value">6</p>
+            <p class="metric-label">SQL migrations</p>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+    <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="footer-logo">QH</span>
+        <span class="footer-tagline">Fullstack Developer</span>
+      </div>
+      <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="../../#about">About</a>
+          <a href="../../#skills">Skills</a>
+          <a href="../../#portfolio">Portfolio</a>
+          <a href="../../#contact">Contact</a>
+      </nav>
+      <div class="footer-social">
+          <a href="https://github.com/QuocHuy-Dev-FS" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a>
+          <a href="https://www.linkedin.com/in/huy-%C4%91o%C3%A0n-077089432" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="mailto:doanquochuy.dev@gmail.com" aria-label="Email"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/><polyline points="3 7 12 13 21 7"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-copy container">
+      <p>&#169; 2026 Đoàn Quốc Huy. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/site.js"></script>
+</body>
+</html>

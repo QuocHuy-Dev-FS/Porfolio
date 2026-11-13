@@ -1,12 +1,12 @@
 # Portfolio — Đoàn Quốc Huy
 
-Static portfolio site for a fullstack developer, generated from a single data file (`data/profile.json`) and published on GitHub Pages. No dependencies, no CDN, no external fonts.
+Trang portfolio tĩnh cho một lập trình viên fullstack, sinh ra từ một file dữ liệu duy nhất (`data/profile.json`) và công khai trên GitHub Pages. Không dependency, không CDN, không font ngoài.
 
 ---
 
 ## Xem cục bộ
 
-**Cách 1 — HTTP server (khuyến nghị, tránh lỗi CORS với file JS module):**
+**Cách 1 — HTTP server (khuyến nghị, tránh lỗi CORS với JS module):**
 
 ```bash
 python3 -m http.server 8000 --directory docs
@@ -49,8 +49,14 @@ Portfolio/
 │   └── qa-report.md        # kết quả kiểm định (do qa-auditor ghi)
 ├── docs/                   # output — KHÔNG sửa tay
 │   ├── index.html
+│   ├── 404.html
+│   ├── sitemap.xml
+│   ├── robots.txt
 │   ├── assets/
-│   └── ...
+│   └── projects/
+│       ├── hospital-indoor-navigation/
+│       ├── hospital-quality-survey/
+│       └── quan-ly-nhan-vien/
 ├── scripts/
 │   ├── build.mjs           # sinh docs/ từ profile.json + templates/
 │   └── check.mjs           # kiểm tra JSON, trường bắt buộc, không dự án private
@@ -67,12 +73,11 @@ Portfolio/
 
 ---
 
-## Cảnh báo còn lại (cần xử lý trước khi publish)
+## Cảnh báo còn lại (nên xử lý trước khi publish)
 
 - **og:image là SVG:** `docs/assets/og-image.svg` — Facebook, LinkedIn, Twitter/X thường không render SVG làm ảnh preview. Nên thay bằng PNG hoặc JPEG kích thước tối thiểu 1200×630 px.
-- **LinkedIn chưa có:** URL `www.linkedin.com/in/huy-đoàn-077089432` chứa ký tự có dấu chưa được xác nhận. Xác nhận URL thực (có thể là `huy-doan-077089432`) rồi thêm vào `person.links.linkedin` trong `data/profile.json` và build lại.
+- **URL site có thể typo:** `site.url` hiện là `https://quochuy-dev-fs.github.io/Porfolio/` (tên repo "Porfolio" thiếu chữ "t"). Xác nhận tên repo thực trên GitHub trước khi push (xem `data/publish-steps.md` Bước 0a).
 - **Responsive 320 px:** Chỉ kiểm tra CSS tĩnh, chưa xem trên viewport thật. Mở DevTools và thử ở 320 px trước khi publish.
-- **URL site:** Placeholder `https://quochuy-dev-fs.github.io/Porfolio/` (tên repo "Porfolio" có thể là typo). Xác nhận tên repo thực trước khi push (xem `data/publish-steps.md`).
 
 ---
 

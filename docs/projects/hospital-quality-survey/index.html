@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hospital Quality Survey — Đoàn Quốc Huy</title>
+  <meta name="description" content="Patient satisfaction kiosk and quality management portal built for a Grade-I hospital. Survey flow covers department selection, criteria rating, and NPS; admin dashboard tracks KPIs, charts, and complaints.">
+  <link rel="canonical" href="https://quochuy-dev-fs.github.io/Porfolio/projects/hospital-quality-survey/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Hospital Quality Survey — Đoàn Quốc Huy">
+  <meta property="og:description" content="Patient satisfaction kiosk and quality management portal built for a Grade-I hospital. Survey flow covers department selection, criteria rating, and NPS; admin dashboard tracks KPIs, charts, and complaints.">
+  <meta property="og:url" content="https://quochuy-dev-fs.github.io/Porfolio/projects/hospital-quality-survey/">
+  <meta property="og:image" content="https://quochuy-dev-fs.github.io/Porfolio/assets/og-image.svg">
+  <meta property="og:image:alt" content="Hospital Quality Survey — Đoàn Quốc Huy">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://quochuy-dev-fs.github.io/Porfolio/assets/og-image.svg">
+  <meta name="theme-color" content="#0f172a">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Đoàn Quốc Huy","url":"https://quochuy-dev-fs.github.io/Porfolio/","jobTitle":"Fullstack Developer","email":"doanquochuy.dev@gmail.com","sameAs":["https://github.com/QuocHuy-Dev-FS","https://www.linkedin.com/in/huy-%C4%91o%C3%A0n-077089432"]}</script>
+  <link rel="stylesheet" href="../../assets/style.css">
+  <script>document.documentElement.classList.add('js-on')</script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div class="scroll-progress" aria-hidden="true"><div class="scroll-progress__fill"></div></div>
+
+    <header class="site-header" role="banner">
+    <nav class="nav container" aria-label="Main navigation">
+      <a href="../../#hero" class="nav-logo" aria-label="Đoàn Quốc Huy — home">QH</a>
+      <ul class="nav-links" role="list">
+          <li><a href="../../#about">About</a></li>
+          <li><a href="../../#skills">Skills</a></li>
+          <li><a href="../../#portfolio">Portfolio</a></li>
+          <li><a href="../../#contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="../../#contact" class="btn-primary">Hire Me</a>
+        <button
+          class="hamburger"
+          aria-controls="nav-drawer"
+          aria-expanded="false"
+          aria-label="Open navigation menu"
+        ><span></span><span></span><span></span></button>
+      </div>
+    </nav>
+  </header>
+  <div id="nav-drawer" class="nav-drawer" role="navigation" aria-label="Mobile navigation">
+    <ul>
+        <li><a href="../../#about">About</a></li>
+        <li><a href="../../#skills">Skills</a></li>
+        <li><a href="../../#portfolio">Portfolio</a></li>
+        <li><a href="../../#contact">Contact</a></li>
+    </ul>
+  </div>
+
+  <main id="main-content">
+    <article class="project-detail container" aria-labelledby="project-h1">
+      <a href="../../#portfolio" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+        Back to Portfolio
+      </a>
+
+      <header class="project-detail__header">
+        <h1 id="project-h1" class="project-detail__h1">Hospital Quality Survey</h1>
+        <p class="project-detail__meta">Fullstack Developer</p>
+        <div class="project-detail__stack">
+          <span class="chip">Next.js 16.4</span>
+          <span class="chip">React 19.3</span>
+          <span class="chip">TypeScript</span>
+          <span class="chip">Tailwind CSS 4</span>
+          <span class="chip">Supabase</span>
+          <span class="chip">PostgreSQL</span>
+          <span class="chip">Supabase Auth</span>
+          <span class="chip">Recharts 3</span>
+          <span class="chip">Lucide React</span>
+          <span class="chip">ESLint 9</span>
+          <span class="chip">Node.js</span>
+        </div>
+      </header>
+
+      <div class="project-detail__section">
+        <h2>Overview</h2>
+        <p class="project-detail__summary">Patient satisfaction kiosk and quality management portal built for a Grade-I hospital. Survey flow covers department selection, criteria rating, and NPS; admin dashboard tracks KPIs, charts, and complaints.</p>
+      </div>
+
+      <div class="project-detail__section">
+        <h2>Highlights</h2>
+        <ul class="project-detail__highlights">
+          <li>Resolve department-code mismatches with a multi-step resolveDepartment function (exact → prefix → name → static map); verify correctness with a custom test script without altering DB data</li>
+          <li>Enforce two-layer security at server and DB level, not only in UI; apply migration for secure feedback table and status-history tracking</li>
+          <li>Design for public kiosk use: large touch targets, custom TouchNumpad, KioskIdleTimer auto-reset, and countdown screen after submission</li>
+          <li>Configure survey forms in the database; maintain surveyFallback so the kiosk works when the API is unavailable</li>
+          <li>Write idempotent SQL migrations; export complaint data as CSV with UTF-8 BOM for correct Vietnamese character display in Excel</li>
+        </ul>
+      </div>
+      <div class="project-detail__section">
+        <h2>Metrics</h2>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <p class="metric-value">27/27</p>
+            <p class="metric-label">Department-code mapping tests passed</p>
+          </div>
+          <div class="metric-card">
+            <p class="metric-value">4</p>
+            <p class="metric-label">SQL migrations</p>
+          </div>
+          <div class="metric-card">
+            <p class="metric-value">13</p>
+            <p class="metric-label">Departments listed in kiosk info modal</p>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+    <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="footer-logo">QH</span>
+        <span class="footer-tagline">Fullstack Developer</span>
+      </div>
+      <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="../../#about">About</a>
+          <a href="../../#skills">Skills</a>
+          <a href="../../#portfolio">Portfolio</a>
+          <a href="../../#contact">Contact</a>
+      </nav>
+      <div class="footer-social">
+          <a href="https://github.com/QuocHuy-Dev-FS" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a>
+          <a href="https://www.linkedin.com/in/huy-%C4%91o%C3%A0n-077089432" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="mailto:doanquochuy.dev@gmail.com" aria-label="Email"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/><polyline points="3 7 12 13 21 7"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-copy container">
+      <p>&#169; 2026 Đoàn Quốc Huy. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/site.js"></script>
+</body>
+</html>

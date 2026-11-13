@@ -1,25 +1,52 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="{{OG_IMAGE_ALT}}">
-  <!-- Background -->
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0f172a"/>
-      <stop offset="100%" stop-color="#1e293b"/>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#0b1220"/>
+      <stop offset="55%"  stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#042f2e"/>
+    </linearGradient>
+    <linearGradient id="accent-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+    <linearGradient id="circle-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#10b981"/>
     </linearGradient>
   </defs>
-  <rect width="1200" height="630" fill="url(#bg)"/>
 
-  <!-- Decorative code symbol (right side) -->
-  <text x="820" y="420" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="260" font-weight="700" fill="#1e293b" letter-spacing="-4">&lt;/&gt;</text>
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg-grad)"/>
 
-  <!-- Accent bar -->
-  <rect x="80" y="260" width="64" height="6" rx="3" fill="#2563eb"/>
+  <!-- Decorative circles -->
+  <circle cx="1050" cy="150" r="200" fill="#06b6d4" opacity="0.07"/>
+  <circle cx="150"  cy="500" r="160" fill="#10b981" opacity="0.07"/>
 
-  <!-- Person name -->
-  <text x="80" y="210" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="72" font-weight="700" fill="#f1f5f9" letter-spacing="-1">{{PERSON_NAME}}</text>
+  <!-- Bottom accent bar -->
+  <rect x="0" y="610" width="1200" height="6" fill="url(#accent-grad)"/>
 
-  <!-- Person title -->
-  <text x="80" y="330" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="38" font-weight="400" fill="#94a3b8">{{PERSON_TITLE}}</text>
+  <!-- Left accent bar -->
+  <rect x="80" y="140" width="4" height="80" rx="2" fill="url(#accent-grad)"/>
 
-  <!-- Site URL -->
-  <text x="80" y="560" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="24" fill="#475569">{{SITE_HOST}}</text>
+  <!-- Name -->
+  <text x="108" y="195" font-family="ui-sans-serif,system-ui,-apple-system,sans-serif"
+        font-size="52" font-weight="800" fill="#f8fafc">{{PERSON_NAME}}</text>
+
+  <!-- Title -->
+  <text x="108" y="250" font-family="ui-sans-serif,system-ui,-apple-system,sans-serif"
+        font-size="26" font-weight="400" fill="#94a3b8">{{PERSON_TITLE}}</text>
+
+  <!-- Divider -->
+  <line x1="108" y1="280" x2="600" y2="280" stroke="#ffffff" stroke-opacity="0.10" stroke-width="1"/>
+
+  <!-- Domain -->
+  <text x="108" y="320" font-family="ui-monospace,'Cascadia Code',Consolas,monospace"
+        font-size="18" fill="#06b6d4">{{SITE_HOST}}</text>
+
+  <!-- Avatar circle -->
+  <circle cx="1000" cy="315" r="160" fill="url(#circle-grad)" opacity="0.12"/>
+  <circle cx="1000" cy="315" r="130" fill="url(#circle-grad)"/>
+  <text x="1000" y="345" text-anchor="middle" dominant-baseline="middle"
+        font-family="ui-sans-serif,system-ui,-apple-system,sans-serif"
+        font-size="80" font-weight="800" fill="#0b1220">QH</text>
 </svg>

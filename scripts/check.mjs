@@ -1,21 +1,7 @@
 /**
  * scripts/check.mjs — Portfolio output validator
- * Node 18+, only node: built-in modules used.
- *
- * Usage: node scripts/check.mjs
- * Exits with code 0 when all checks pass, code 1 on any failure.
- *
- * Checks:
- *  1. docs/ exists and is non-empty
- *  2. profile.json is valid JSON with required fields
- *  3. All metrics in profile.json have a non-empty source
- *  4. No private-visibility project appears in docs/
- *  5. No placeholder tokens ({{, TODO, lorem) remain in HTML files
- *  6. Each HTML page: exactly one <h1>, has <meta name="description">, has <link rel="canonical">
- *  7. All <img> elements have a non-empty alt attribute
- *  8. No http:// URLs in docs/ HTML files
- *  9. No internal links point to missing files
- * 10. No string "Bệnh viện Quân y 7A" in docs/
+ * Node 18+, only node: built-in modules.
+ * Exit code 0 = all pass, 1 = error(s) found.
  */
 
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
@@ -30,71 +16,46 @@ const DATA = join(ROOT, 'data');
 let errors = 0;
 let warnings = 0;
 
-function fail(msg) {
-  console.error('  FAIL:', msg);
-  errors++;
-}
+function fail(msg)  { console.error('  FAIL:', msg); errors++; }
+function warn(msg)  { console.warn ('  WARN:', msg); warnings++; }
+function pass(msg)  { console.log  ('  PASS:', msg); }
 
-function warn(msg) {
-  console.warn('  WARN:', msg);
-  warnings++;
-}
-
-function pass(msg) {
-  console.log('  PASS:', msg);
-}
-
-/** Recursively collect all files under a directory. */
 function collectFiles(dir) {
   const results = [];
   if (!existsSync(dir)) return results;
   for (const entry of readdirSync(dir)) {
     const full = join(dir, entry);
     const st = statSync(full);
-    if (st.isDirectory()) {
-      results.push(...collectFiles(full));
-    } else {
-      results.push(full);
-    }
+    if (st.isDirectory()) results.push(...collectFiles(full));
+    else results.push(full);
   }
   return results;
 }
 
-/** Collect only .html files. */
 function collectHtml(dir) {
   return collectFiles(dir).filter(f => f.endsWith('.html'));
 }
 
-/** Resolve an href relative to its containing HTML file's path within docs/. */
+function relPath(f) {
+  return f.replace(ROOT + '\\', '').replace(ROOT + '/', '');
+}
+
 function resolveInternalHref(href, htmlFilePath) {
-  /* Strip query and fragment */
   const bare = href.split('?')[0].split('#')[0];
-  if (!bare) return null; /* fragment-only link */
-
-  /* Absolute path relative to docs/ */
-  if (bare.startsWith('/')) {
-    return join(DOCS, bare);
-  }
-
-  /* Relative */
+  if (!bare) return null;
+  if (bare.startsWith('/')) return join(DOCS, bare);
   return resolve(dirname(htmlFilePath), bare);
 }
 
-/** Check that an internal file/directory href actually exists in docs/. */
 function internalHrefExists(href, htmlFilePath) {
   const resolved = resolveInternalHref(href, htmlFilePath);
-  if (!resolved) return true; /* fragment links — always OK */
-
-  /* Exact file match */
+  if (!resolved) return true;
   if (existsSync(resolved)) {
     const st = statSync(resolved);
     if (st.isFile()) return true;
-    /* Directory → check for index.html */
     return existsSync(join(resolved, 'index.html'));
   }
-  /* Try with .html suffix */
   if (existsSync(resolved + '.html')) return true;
-  /* Path is inside docs? If not, skip (external). */
   if (!resolved.startsWith(DOCS)) return true;
   return false;
 }
@@ -105,11 +66,8 @@ if (!existsSync(DOCS)) {
   fail('docs/ directory does not exist. Run build.mjs first.');
 } else {
   const entries = readdirSync(DOCS);
-  if (entries.length === 0) {
-    fail('docs/ directory is empty.');
-  } else {
-    pass(`docs/ contains ${entries.length} entries`);
-  }
+  if (entries.length === 0) fail('docs/ directory is empty.');
+  else pass(`docs/ contains ${entries.length} entries`);
 }
 
 /* ── 2. profile.json validity ── */
@@ -122,9 +80,7 @@ if (!existsSync(profilePath)) {
   try {
     profile = JSON.parse(readFileSync(profilePath, 'utf8'));
     pass('JSON parses correctly');
-
-    const required = ['person.name', 'person.title', 'person.summary', 'site.url'];
-    for (const field of required) {
+    for (const field of ['person.name', 'person.title', 'person.summary', 'site.url']) {
       const parts = field.split('.');
       let val = profile;
       for (const part of parts) val = val && val[part];
@@ -137,7 +93,7 @@ if (!existsSync(profilePath)) {
 }
 
 /* ── 3. Metrics have source ── */
-console.log('\n[3] All metrics have a source');
+console.log('\n[3] All project metrics have a source');
 if (profile) {
   let metricCount = 0;
   for (const project of (profile.projects || [])) {
@@ -147,12 +103,14 @@ if (profile) {
         fail(`Project "${project.slug}" metric "${metric.label}" is missing source`);
       }
     }
+    for (const highlight of (project.highlights || [])) {
+      if (!highlight.source || !highlight.source.trim()) {
+        warn(`Project "${project.slug}" highlight missing source: "${String(highlight.text || '').slice(0, 60)}"`);
+      }
+    }
   }
-  if (metricCount === 0) {
-    pass('No metrics found (nothing to check)');
-  } else {
-    pass(`Checked ${metricCount} metric(s) for source`);
-  }
+  if (metricCount === 0) pass('No metrics found (nothing to check)');
+  else pass(`Checked ${metricCount} metric(s) for source`);
 }
 
 /* ── 4. No private projects in docs/ ── */
@@ -161,24 +119,19 @@ if (profile && existsSync(DOCS)) {
   const privateProjects = (profile.projects || []).filter(p => p.visibility === 'private');
   const htmlFiles = collectHtml(DOCS);
   for (const pp of privateProjects) {
-    /* Check no directory exists for private slugs */
     const projectDir = join(DOCS, 'projects', pp.slug);
     if (existsSync(projectDir)) {
       fail(`Private project "${pp.slug}" has a page in docs/projects/${pp.slug}/`);
     }
-    /* Check private project name does not appear in any HTML */
     for (const htmlFile of htmlFiles) {
       const content = readFileSync(htmlFile, 'utf8');
       if (content.includes(pp.name)) {
-        fail(`Private project name "${pp.name}" found in ${htmlFile.replace(ROOT, '')}`);
+        fail(`Private project name "${pp.name}" found in ${relPath(htmlFile)}`);
       }
     }
   }
-  if (privateProjects.length === 0) {
-    pass('No private projects defined');
-  } else {
-    pass(`Checked ${privateProjects.length} private project(s) are absent from docs/`);
-  }
+  if (privateProjects.length === 0) pass('No private projects defined');
+  else pass(`Checked ${privateProjects.length} private project(s) absent from docs/`);
 }
 
 /* ── 5. No placeholder tokens ── */
@@ -191,7 +144,7 @@ if (existsSync(DOCS)) {
     const content = readFileSync(f, 'utf8');
     for (const pat of patterns) {
       if (pat.test(content)) {
-        fail(`Placeholder "${pat}" found in ${f.replace(ROOT, '')}`);
+        fail(`Placeholder "${pat}" found in ${relPath(f)}`);
         found = true;
       }
     }
@@ -199,31 +152,23 @@ if (existsSync(DOCS)) {
   if (!found) pass('No placeholder tokens found');
 }
 
-/* ── 6. HTML structure checks (h1, meta description, canonical) ── */
+/* ── 6. HTML structure: single h1, meta description, canonical ── */
 console.log('\n[6] HTML structure: single h1, meta description, canonical');
 if (existsSync(DOCS)) {
   const htmlFiles = collectHtml(DOCS);
   for (const f of htmlFiles) {
     const content = readFileSync(f, 'utf8');
-    const rel = f.replace(ROOT + '\\', '').replace(ROOT + '/', '');
+    const rel = relPath(f);
 
-    /* Count h1 tags */
     const h1Matches = content.match(/<h1[\s>]/gi) || [];
-    if (h1Matches.length === 0) {
-      fail(`${rel}: no <h1> found`);
-    } else if (h1Matches.length > 1) {
-      fail(`${rel}: ${h1Matches.length} <h1> elements found (expected exactly 1)`);
-    }
+    if (h1Matches.length === 0) fail(`${rel}: no <h1> found`);
+    else if (h1Matches.length > 1) fail(`${rel}: ${h1Matches.length} <h1> elements (expected 1)`);
 
-    /* meta description */
-    if (!/<meta\s[^>]*name=["']description["'][^>]*>/i.test(content)) {
+    if (!/<meta\s[^>]*name=["']description["'][^>]*>/i.test(content))
       fail(`${rel}: missing <meta name="description">`);
-    }
 
-    /* canonical */
-    if (!/<link\s[^>]*rel=["']canonical["'][^>]*>/i.test(content)) {
+    if (!/<link\s[^>]*rel=["']canonical["'][^>]*>/i.test(content))
       fail(`${rel}: missing <link rel="canonical">`);
-    }
   }
   pass(`Structure checked for ${htmlFiles.length} HTML file(s)`);
 }
@@ -236,12 +181,11 @@ if (existsSync(DOCS)) {
   let found = false;
   for (const f of htmlFiles) {
     const content = readFileSync(f, 'utf8');
-    const rel = f.replace(ROOT + '\\', '').replace(ROOT + '/', '');
+    const rel = relPath(f);
     let m;
     while ((m = imgPattern.exec(content)) !== null) {
-      const attrs = m[1];
-      if (!/alt\s*=\s*["'][^"']+["']/i.test(attrs)) {
-        fail(`${rel}: <img> missing non-empty alt attribute: ${m[0].slice(0, 80)}`);
+      if (!/alt\s*=\s*["'][^"']+["']/i.test(m[1])) {
+        fail(`${rel}: <img> missing non-empty alt: ${m[0].slice(0, 80)}`);
         found = true;
       }
     }
@@ -250,18 +194,16 @@ if (existsSync(DOCS)) {
 }
 
 /* ── 8. No http:// URLs ── */
-console.log('\n[8] No http:// URLs in HTML files');
+console.log('\n[8] No http:// URLs in HTML files (XML files excluded)');
 if (existsSync(DOCS)) {
-  const htmlFiles = collectHtml(DOCS);
+  const htmlFiles = collectHtml(DOCS); // .html only — sitemap.xml namespace is exempt
   let found = false;
   for (const f of htmlFiles) {
     const content = readFileSync(f, 'utf8');
-    const rel = f.replace(ROOT + '\\', '').replace(ROOT + '/', '');
-    /* Allow http: in comments and schema.org/sitemaps XML namespace */
+    const rel = relPath(f);
     const lines = content.split('\n');
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
-      /* Strip XML namespace declarations (xmlns="http://...") before checking */
       const lineNoXmlns = line.replace(/xmlns\s*=\s*["'][^"']*["']/g, '');
       if (/http:\/\//.test(lineNoXmlns) &&
           !/<!--.*http:\/\/.*-->/.test(lineNoXmlns) &&
@@ -275,7 +217,7 @@ if (existsSync(DOCS)) {
   if (!found) pass('No http:// URLs found');
 }
 
-/* ── 9. Internal links resolve ── */
+/* ── 9. Internal file links resolve ── */
 console.log('\n[9] Internal links resolve to existing files');
 if (existsSync(DOCS)) {
   const htmlFiles = collectHtml(DOCS);
@@ -283,19 +225,18 @@ if (existsSync(DOCS)) {
   let found = false;
   for (const f of htmlFiles) {
     const content = readFileSync(f, 'utf8');
-    const rel = f.replace(ROOT + '\\', '').replace(ROOT + '/', '');
+    const rel = relPath(f);
     let m;
     while ((m = hrefPattern.exec(content)) !== null) {
       const href = m[1];
-      /* Skip external links and mailto */
-      if (/^https?:\/\//i.test(href) || /^mailto:/i.test(href)) continue;
+      if (/^https?:\/\//i.test(href) || /^mailto:/i.test(href) || /^tel:/i.test(href)) continue;
       if (!internalHrefExists(href, f)) {
         fail(`${rel}: broken internal link "${href}"`);
         found = true;
       }
     }
   }
-  if (!found) pass('All internal links resolve');
+  if (!found) pass('All internal file links resolve');
 }
 
 /* ── 10. No forbidden strings ── */
@@ -308,7 +249,7 @@ if (existsSync(DOCS)) {
   let found = false;
   for (const f of allFiles) {
     const content = readFileSync(f, 'utf8');
-    const rel = f.replace(ROOT + '\\', '').replace(ROOT + '/', '');
+    const rel = relPath(f);
     for (const str of forbidden) {
       if (content.includes(str)) {
         fail(`${rel}: forbidden string "${str}" found`);
@@ -319,24 +260,15 @@ if (existsSync(DOCS)) {
   if (!found) pass('No forbidden strings found');
 }
 
-/* ── 11. og:image present and image file exists ── */
-console.log('\n[11] og:image present and image file exists in docs/');
+/* ── 11. og:image present and file exists ── */
+console.log('\n[11] og:image present and file exists');
 if (existsSync(DOCS)) {
-  /* Determine site base path (e.g. "/Porfolio/" for a subdirectory GitHub Pages site) */
   let siteBasePath = '/';
   if (profile && profile.site && profile.site.url) {
-    try {
-      siteBasePath = new URL(profile.site.url).pathname;
-      if (!siteBasePath.endsWith('/')) siteBasePath += '/';
-    } catch (_) { /* ignore */ }
+    try { siteBasePath = new URL(profile.site.url).pathname; if (!siteBasePath.endsWith('/')) siteBasePath += '/'; }
+    catch (_) {}
   }
 
-  /**
-   * Resolve an og:image URL to a local file path inside docs/.
-   * Absolute URLs: strip origin + site base path → remainder maps into docs/.
-   * Root-relative URLs starting with siteBasePath: same stripping.
-   * Other relative URLs: resolve against the HTML file's location.
-   */
   function resolveImagePath(imgUrl, htmlFilePath) {
     if (/^https?:\/\//i.test(imgUrl)) {
       try {
@@ -351,9 +283,7 @@ if (existsSync(DOCS)) {
       const p = imgUrl.slice(siteBasePath.length);
       return join(DOCS, ...p.split('/').filter(Boolean));
     }
-    if (imgUrl.startsWith('/')) {
-      return join(DOCS, imgUrl.replace(/^\//, ''));
-    }
+    if (imgUrl.startsWith('/')) return join(DOCS, imgUrl.replace(/^\//, ''));
     return resolve(dirname(htmlFilePath), imgUrl);
   }
 
@@ -361,34 +291,157 @@ if (existsSync(DOCS)) {
   let found = false;
   for (const f of htmlFiles) {
     const content = readFileSync(f, 'utf8');
-    const rel = f.replace(ROOT + '\\', '').replace(ROOT + '/', '');
-
-    /* Check og:image meta tag is present and has a non-empty content */
-    const ogImageMatch = content.match(/<meta\s[^>]*property=["']og:image["'][^>]*content=["']([^"']+)["'][^>]*>/i)
+    const rel = relPath(f);
+    const ogMatch = content.match(/<meta\s[^>]*property=["']og:image["'][^>]*content=["']([^"']+)["'][^>]*>/i)
       || content.match(/<meta\s[^>]*content=["']([^"']+)["'][^>]*property=["']og:image["'][^>]*>/i);
-    if (!ogImageMatch || !ogImageMatch[1].trim()) {
+    if (!ogMatch || !ogMatch[1].trim()) {
       fail(`${rel}: missing or empty <meta property="og:image">`);
       found = true;
     } else {
-      const imgUrl = ogImageMatch[1].trim();
-      const imgFilePath = resolveImagePath(imgUrl, f);
-      if (imgFilePath && !existsSync(imgFilePath)) {
-        fail(`${rel}: og:image references non-existent file: ${imgUrl}`);
+      const imgPath = resolveImagePath(ogMatch[1].trim(), f);
+      if (imgPath && !existsSync(imgPath)) {
+        fail(`${rel}: og:image references non-existent file: ${ogMatch[1]}`);
         found = true;
       }
     }
-
-    /* If twitter:card is present, twitter:image must also be present and non-empty */
     if (/<meta\s[^>]*name=["']twitter:card["'][^>]*>/i.test(content)) {
-      const twImageMatch = content.match(/<meta\s[^>]*name=["']twitter:image["'][^>]*content=["']([^"']+)["'][^>]*>/i)
+      const twMatch = content.match(/<meta\s[^>]*name=["']twitter:image["'][^>]*content=["']([^"']+)["'][^>]*>/i)
         || content.match(/<meta\s[^>]*content=["']([^"']+)["'][^>]*name=["']twitter:image["'][^>]*>/i);
-      if (!twImageMatch || !twImageMatch[1].trim()) {
-        fail(`${rel}: twitter:card present but twitter:image is missing or empty`);
+      if (!twMatch || !twMatch[1].trim()) {
+        fail(`${rel}: twitter:card present but twitter:image missing`);
         found = true;
       }
     }
   }
-  if (!found) pass('og:image present and image file exists on all pages');
+  if (!found) pass('og:image present and file exists on all pages');
+}
+
+/* ── 12. stats/pricing/testimonials/skillLevels items have source ── */
+console.log('\n[12] Optional data arrays: items have source');
+if (profile) {
+  let checked = 0;
+  const checks = [
+    { key: 'stats',        label: 'stats' },
+    { key: 'skillLevels',  label: 'skillLevels' },
+    { key: 'testimonials', label: 'testimonials' },
+    { key: 'pricing',      label: 'pricing' },
+  ];
+  for (const { key, label } of checks) {
+    if (!Array.isArray(profile[key])) continue;
+    for (let i = 0; i < profile[key].length; i++) {
+      const item = profile[key][i];
+      checked++;
+      if (!item.source || !String(item.source).trim()) {
+        fail(`${label}[${i}] is missing source (label/name: "${item.label || item.name || item.author || ''}")`);
+      }
+    }
+  }
+  if (checked === 0) pass('No optional data arrays present (nothing to check)');
+  else pass(`Checked ${checked} item(s) in optional arrays for source`);
+}
+
+/* ── 13. No external <script src> or <link rel=stylesheet> ── */
+console.log('\n[13] No external script/stylesheet imports');
+if (existsSync(DOCS)) {
+  const htmlFiles = collectHtml(DOCS);
+  const extScriptPattern = /<script\b[^>]*\bsrc=["'](https?:\/\/[^"']+)["'][^>]*>/gi;
+  const extStylePattern  = /<link\b[^>]*\brel=["']stylesheet["'][^>]*\bhref=["'](https?:\/\/[^"']+)["'][^>]*>/gi;
+  let found = false;
+  for (const f of htmlFiles) {
+    const content = readFileSync(f, 'utf8');
+    const rel = relPath(f);
+    let m;
+    while ((m = extScriptPattern.exec(content)) !== null) {
+      fail(`${rel}: external <script src="${m[1]}">`);
+      found = true;
+    }
+    while ((m = extStylePattern.exec(content)) !== null) {
+      fail(`${rel}: external <link rel="stylesheet" href="${m[1]}">`);
+      found = true;
+    }
+  }
+  if (!found) pass('No external script/stylesheet imports found');
+}
+
+/* ── 14. No #blog links ── */
+console.log('\n[14] No #blog links');
+if (existsSync(DOCS)) {
+  const htmlFiles = collectHtml(DOCS);
+  let found = false;
+  for (const f of htmlFiles) {
+    const content = readFileSync(f, 'utf8');
+    if (/href=["']#blog["']/i.test(content)) {
+      fail(`${relPath(f)}: link to #blog found`);
+      found = true;
+    }
+  }
+  if (!found) pass('No #blog links found');
+}
+
+/* ── 15. Resume file exists if person.resume set ── */
+console.log('\n[15] Resume file exists (if person.resume set)');
+if (profile && profile.person && profile.person.resume) {
+  const resumePath = profile.person.resume.replace(/^\//, '');
+  const resumeFile = join(DOCS, resumePath);
+  if (!existsSync(resumeFile)) {
+    fail(`person.resume="${profile.person.resume}" but ${resumePath} not found in docs/`);
+  } else {
+    pass(`Resume file exists: ${resumePath}`);
+  }
+} else {
+  pass('person.resume not set (skipped)');
+}
+
+/* ── 16. Fragment hrefs have matching id in same page ── */
+console.log('\n[16] Fragment hrefs (#id) have matching id in same page');
+if (existsSync(DOCS)) {
+  const htmlFiles = collectHtml(DOCS);
+  const fragPattern = /href=["']#([^"']+)["']/gi;
+  const idPattern   = /\bid=["']([^"']+)["']/gi;
+  let found = false;
+  for (const f of htmlFiles) {
+    const content = readFileSync(f, 'utf8');
+    const rel = relPath(f);
+
+    // Collect all ids in this page
+    const ids = new Set();
+    let im;
+    while ((im = idPattern.exec(content)) !== null) ids.add(im[1]);
+
+    // Check each fragment href
+    let fm;
+    while ((fm = fragPattern.exec(content)) !== null) {
+      const id = fm[1];
+      if (!ids.has(id)) {
+        fail(`${rel}: href="#${id}" but no element with id="${id}" found`);
+        found = true;
+      }
+    }
+  }
+  if (!found) pass('All fragment hrefs have matching id in page');
+}
+
+/* ── 17. LinkedIn URL not unencoded ── */
+console.log('\n[17] LinkedIn URL check');
+if (profile && profile.person && profile.person.links && profile.person.links.linkedin) {
+  const liUrl = profile.person.links.linkedin;
+  if (/[^\x00-\x7F]/.test(liUrl)) {
+    warn(`person.links.linkedin contains non-ASCII characters (not encoded): "${liUrl}"`);
+  } else {
+    pass('LinkedIn URL is ASCII-safe');
+  }
+} else {
+  pass('No LinkedIn URL set (skipped)');
+}
+
+/* ── 18. site.url is not placeholder ── */
+console.log('\n[18] site.url placeholder check');
+if (profile && profile.site && profile.site.url) {
+  if (profile.site.url.includes('USERNAME')) {
+    warn('site.url still contains "USERNAME" placeholder');
+  } else {
+    pass('site.url appears set');
+  }
 }
 
 /* ── Summary ── */

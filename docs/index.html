@@ -6,7 +6,6 @@
   <title>Đoàn Quốc Huy — Fullstack Developer</title>
   <meta name="description" content="Fullstack developer building web apps with React, Next.js, and Supabase. Applies A* pathfinding, BLE positioning, and 3D visualization to real-world problems.">
   <link rel="canonical" href="https://quochuy-dev-fs.github.io/Porfolio/">
-  <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Đoàn Quốc Huy — Fullstack Developer">
   <meta property="og:description" content="Fullstack developer building web apps with React, Next.js, and Supabase. Applies A* pathfinding, BLE positioning, and 3D visualization to real-world problems.">
@@ -16,245 +15,294 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://quochuy-dev-fs.github.io/Porfolio/assets/og-image.svg">
   <meta name="theme-color" content="#0f172a">
-  <!-- JSON-LD -->
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Đoàn Quốc Huy","url":"https://quochuy-dev-fs.github.io/Porfolio/","jobTitle":"Fullstack Developer","email":"doanquochuy.dev@gmail.com","sameAs":["https://github.com/QuocHuy-Dev-FS"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Đoàn Quốc Huy","url":"https://quochuy-dev-fs.github.io/Porfolio/","jobTitle":"Fullstack Developer","email":"doanquochuy.dev@gmail.com","sameAs":["https://github.com/QuocHuy-Dev-FS","https://www.linkedin.com/in/huy-%C4%91o%C3%A0n-077089432"]}</script>
   <link rel="stylesheet" href="assets/style.css">
+  <script>document.documentElement.classList.add('js-on')</script>
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to main content</a>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div class="scroll-progress" aria-hidden="true"><div class="scroll-progress__fill"></div></div>
 
-  <!-- Header -->
-  <header id="header" role="banner">
-    <div class="header-inner">
-      <button
-        id="nav-toggle"
-        class="nav-toggle"
-        aria-controls="primary-nav"
-        aria-expanded="false"
-        aria-label="Open navigation menu"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <nav id="primary-nav" aria-label="Primary">
-        <ul>
+    <header class="site-header" role="banner">
+    <nav class="nav container" aria-label="Main navigation">
+      <a href="#hero" class="nav-logo" aria-label="Đoàn Quốc Huy — home">QH</a>
+      <ul class="nav-links" role="list">
           <li><a href="#about">About</a></li>
           <li><a href="#skills">Skills</a></li>
-          <li><a href="#projects">Projects</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
           <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
-    </div>
+      </ul>
+      <div class="nav-actions">
+        <a href="#contact" class="btn-primary">Hire Me</a>
+        <button
+          class="hamburger"
+          aria-controls="nav-drawer"
+          aria-expanded="false"
+          aria-label="Open navigation menu"
+        ><span></span><span></span><span></span></button>
+      </div>
+    </nav>
   </header>
+  <div id="nav-drawer" class="nav-drawer" role="navigation" aria-label="Mobile navigation">
+    <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
 
-  <!-- Main content -->
-  <main id="main">
-
+  <main id="main-content">
     <!-- Hero -->
-    <section id="hero" aria-label="Introduction">
-      <div class="hero-bg-gradient" aria-hidden="true"></div>
-      <svg class="hero-symbols" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <pattern id="code-symbols" x="0" y="0" width="400" height="400" patternUnits="userSpaceOnUse">
-            <text x="50"  y="50"  fill="currentColor" font-family="monospace" font-size="24" transform="rotate(-15)" opacity="0.12">&lt;/&gt;</text>
-            <text x="150" y="100" fill="currentColor" font-family="monospace" font-size="20" transform="rotate(10)"  opacity="0.10">{}</text>
-            <text x="250" y="80"  fill="currentColor" font-family="monospace" font-size="18" transform="rotate(-5)"  opacity="0.10">=&gt;</text>
-            <text x="100" y="200" fill="currentColor" font-family="monospace" font-size="22" transform="rotate(15)"  opacity="0.12">[]</text>
-            <text x="300" y="180" fill="currentColor" font-family="monospace" font-size="20" transform="rotate(-10)" opacity="0.10">&lt;&gt;</text>
-            <text x="200" y="250" fill="currentColor" font-family="monospace" font-size="24" transform="rotate(5)"   opacity="0.10">()</text>
-            <text x="50"  y="320" fill="currentColor" font-family="monospace" font-size="18" transform="rotate(-8)"  opacity="0.10">::</text>
-            <text x="350" y="300" fill="currentColor" font-family="monospace" font-size="22" transform="rotate(12)"  opacity="0.10">==</text>
-            <text x="150" y="350" fill="currentColor" font-family="monospace" font-size="20" transform="rotate(-15)" opacity="0.12">++</text>
-            <text x="250" y="370" fill="currentColor" font-family="monospace" font-size="24" transform="rotate(8)"   opacity="0.10">;</text>
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#code-symbols)" color="var(--color-accent)"></rect>
-      </svg>
-      <div class="hero-inner">
-        <p class="hero-greeting">Hello!</p>
-        <h1 class="hero-name">
-          <span class="name-prefix">I&#8217;m </span><span class="name-accent">Đoàn Quốc Huy</span>
-        </h1>
-        <p class="hero-title">Fullstack Developer</p>
-        <p class="hero-summary">Fullstack developer building web apps with React, Next.js, and Supabase. Applies A* pathfinding, BLE positioning, and 3D visualization to real-world problems.</p>
-        <div class="hero-cta">
-          <a href="#contact" class="btn-primary">Contact me &#8595;</a>
-          <a href="https://github.com/QuocHuy-Dev-FS" class="btn-secondary" target="_blank" rel="noopener noreferrer">GitHub &#8599;</a>
+    <section id="hero" class="hero section" aria-labelledby="hero-heading">
+      <div class="container hero-inner">
+        <div class="hero-col-left reveal">
+          <p class="hero-greeting">Hello World,</p>
+          <h1 id="hero-heading" class="hero-name">
+            I&#8217;m <span class="hero-name-text">Đoàn Quốc Huy</span>
+          </h1>
+          <p class="hero-title">Fullstack Developer</p>
+          <p class="hero-summary">Fullstack developer building web apps with React, Next.js, and Supabase. Applies A* pathfinding, BLE positioning, and 3D visualization to real-world problems.</p>
+          <div class="hero-badges">
+          <span class="badge">Next.js 16</span>
+          <span class="badge">React</span>
+          <span class="badge">TypeScript</span>
+          <span class="badge">Tailwind CSS</span>
+          </div>
+          <div class="hero-cta">
+            <a href="#portfolio" class="btn-primary">View Projects</a>
+          </div>
+          <div class="hero-socials">
+          <a href="https://github.com/QuocHuy-Dev-FS" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a>
+          <a href="https://www.linkedin.com/in/huy-%C4%91o%C3%A0n-077089432" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="mailto:doanquochuy.dev@gmail.com" aria-label="Email"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/><polyline points="3 7 12 13 21 7"/></svg></a>
+          </div>
         </div>
-        <div class="hero-socials">
-          <a href="mailto:doanquochuy.dev@gmail.com" aria-label="Email"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"/><path d="M3 7l9 6l9 -6"/></svg></a>
-          <a href="https://github.com/QuocHuy-Dev-FS" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"/></svg></a>
+        <div class="hero-col-right">
+          <div class="hero-deco hero-deco--1" aria-hidden="true"></div>
+          <div class="hero-deco hero-deco--2" aria-hidden="true"></div>
+          <div class="hero-avatar-wrap">
+            <div class="hero-avatar" aria-hidden="true">
+              <span class="hero-avatar__initials">QH</span>
+            </div>
+        <span class="hero-floating-badge">Next.js 16</span>
+        <span class="hero-floating-badge">React</span>
+        <span class="hero-floating-badge">TypeScript</span>
+        <span class="hero-floating-badge">Tailwind CSS</span>
+          </div>
         </div>
       </div>
     </section>
-
     <!-- About -->
-    <section id="about" aria-labelledby="about-heading">
-      <div class="section-inner">
-        <div class="section-grid">
-          <div class="section-label">
-            <h2 id="about-heading">About Me</h2>
-            <div class="accent-bar" aria-hidden="true"></div>
+    <section id="about" class="section" aria-labelledby="about-heading">
+      <div class="container">
+        <div class="section-heading">
+          <p class="section-heading__label">About</p>
+          <h2 id="about-heading" class="section-heading__title">About Me</h2>
+        </div>
+        <div class="about-layout">
+          <div class="about-paras reveal">
+          <p>Fullstack developer building web apps with React, Next.js, and Supabase. Applies A* pathfinding, BLE positioning, and 3D visualization to real-world problems.</p>
           </div>
-          <div class="section-content">
-            <p class="about-text">Fullstack developer building web apps with React, Next.js, and Supabase. Applies A* pathfinding, BLE positioning, and 3D visualization to real-world problems.</p>
+          <div class="about-right">
+          <p class="about-paras" style="color:var(--text-secondary);">Fullstack Developer</p>
           </div>
         </div>
       </div>
     </section>
-
     <!-- Skills -->
-    <section id="skills" aria-labelledby="skills-heading">
-      <div class="section-inner">
-        <div class="section-grid">
-          <div class="section-label">
-            <h2 id="skills-heading">Skills</h2>
-            <div class="accent-bar" aria-hidden="true"></div>
+    <section id="skills" class="section" aria-labelledby="skills-heading">
+      <div class="container">
+        <div class="section-heading">
+          <p class="section-heading__label">Tech Stack</p>
+          <h2 id="skills-heading" class="section-heading__title">Skills &amp; Technologies</h2>
+        </div>
+        <div class="skills-layout">
+          <div class="skill-groups">
+          <div class="skill-group reveal">
+            <h3 class="skill-group-name" id="sg-frontend">Frontend</h3>
+            <div class="skill-grid" role="list" aria-labelledby="sg-frontend">
+              <span class="skill-item">Next.js 16</span>
+              <span class="skill-item">React</span>
+              <span class="skill-item">TypeScript</span>
+              <span class="skill-item">Tailwind CSS</span>
+              <span class="skill-item">Three.js</span>
+              <span class="skill-item">JavaScript (ES modules)</span>
+              <span class="skill-item">Vite</span>
+              <span class="skill-item">HTML/CSS</span>
+              <span class="skill-item">Framer Motion</span>
+              <span class="skill-item">React Hook Form</span>
+              <span class="skill-item">Zod</span>
+              <span class="skill-item">date-fns</span>
+            </div>
           </div>
-          <div class="section-content">
-            <div class="skills-groups">
-              <div class="skill-group" role="group" aria-labelledby="group-frontend">
-                <h3 class="skill-group-name" id="group-frontend">Frontend</h3>
-                <ul class="skill-chips">
-              <li><span class="chip">Next.js 16</span></li>
-              <li><span class="chip">React</span></li>
-              <li><span class="chip">TypeScript</span></li>
-              <li><span class="chip">Tailwind CSS</span></li>
-              <li><span class="chip">Three.js</span></li>
-              <li><span class="chip">JavaScript (ES modules)</span></li>
-              <li><span class="chip">Vite</span></li>
-              <li><span class="chip">HTML/CSS</span></li>
-              <li><span class="chip">Framer Motion</span></li>
-              <li><span class="chip">React Hook Form</span></li>
-              <li><span class="chip">Zod</span></li>
-              <li><span class="chip">date-fns</span></li>
-                </ul>
-              </div>
-              <div class="skill-group" role="group" aria-labelledby="group-backend-api">
-                <h3 class="skill-group-name" id="group-backend-api">Backend / API</h3>
-                <ul class="skill-chips">
-              <li><span class="chip">Supabase (PostgreSQL, Auth, RLS)</span></li>
-              <li><span class="chip">Next.js API Route</span></li>
-              <li><span class="chip">Node.js</span></li>
-              <li><span class="chip">Python 3</span></li>
-                </ul>
-              </div>
-              <div class="skill-group" role="group" aria-labelledby="group-algorithms-data">
-                <h3 class="skill-group-name" id="group-algorithms-data">Algorithms &amp; Data</h3>
-                <ul class="skill-chips">
-              <li><span class="chip">A* pathfinding</span></li>
-              <li><span class="chip">multi-floor graph</span></li>
-              <li><span class="chip">RSSI filtering</span></li>
-              <li><span class="chip">log-distance regression</span></li>
-              <li><span class="chip">OpenCV</span></li>
-              <li><span class="chip">trimesh</span></li>
-              <li><span class="chip">NumPy</span></li>
-                </ul>
-              </div>
-              <div class="skill-group" role="group" aria-labelledby="group-hardware-iot">
-                <h3 class="skill-group-name" id="group-hardware-iot">Hardware / IoT</h3>
-                <ul class="skill-chips">
-              <li><span class="chip">BLE iBeacon</span></li>
-              <li><span class="chip">Web Bluetooth</span></li>
-              <li><span class="chip">WebSocket</span></li>
-                </ul>
-              </div>
-              <div class="skill-group" role="group" aria-labelledby="group-testing-quality">
-                <h3 class="skill-group-name" id="group-testing-quality">Testing / Quality</h3>
-                <ul class="skill-chips">
-              <li><span class="chip">Vitest</span></li>
-              <li><span class="chip">Node test runner</span></li>
-              <li><span class="chip">Python unittest</span></li>
-              <li><span class="chip">ESLint</span></li>
-              <li><span class="chip">TypeScript strict</span></li>
-                </ul>
-              </div>            </div>
+          <div class="skill-group reveal">
+            <h3 class="skill-group-name" id="sg-backend-api">Backend / API</h3>
+            <div class="skill-grid" role="list" aria-labelledby="sg-backend-api">
+              <span class="skill-item">Supabase (PostgreSQL, Auth, RLS)</span>
+              <span class="skill-item">Next.js API Route</span>
+              <span class="skill-item">Node.js</span>
+              <span class="skill-item">Python 3</span>
+            </div>
+          </div>
+          <div class="skill-group reveal">
+            <h3 class="skill-group-name" id="sg-algorithms-data">Algorithms &amp; Data</h3>
+            <div class="skill-grid" role="list" aria-labelledby="sg-algorithms-data">
+              <span class="skill-item">A* pathfinding</span>
+              <span class="skill-item">multi-floor graph</span>
+              <span class="skill-item">RSSI filtering</span>
+              <span class="skill-item">log-distance regression</span>
+              <span class="skill-item">OpenCV</span>
+              <span class="skill-item">trimesh</span>
+              <span class="skill-item">NumPy</span>
+            </div>
+          </div>
+          <div class="skill-group reveal">
+            <h3 class="skill-group-name" id="sg-hardware-iot">Hardware / IoT</h3>
+            <div class="skill-grid" role="list" aria-labelledby="sg-hardware-iot">
+              <span class="skill-item">BLE iBeacon</span>
+              <span class="skill-item">Web Bluetooth</span>
+              <span class="skill-item">WebSocket</span>
+            </div>
+          </div>
+          <div class="skill-group reveal">
+            <h3 class="skill-group-name" id="sg-testing-quality">Testing / Quality</h3>
+            <div class="skill-grid" role="list" aria-labelledby="sg-testing-quality">
+              <span class="skill-item">Vitest</span>
+              <span class="skill-item">Node test runner</span>
+              <span class="skill-item">Python unittest</span>
+              <span class="skill-item">ESLint</span>
+              <span class="skill-item">TypeScript strict</span>
+            </div>
+          </div>
           </div>
         </div>
       </div>
     </section>
-
-    <!-- Projects -->
-    <section id="projects" aria-labelledby="projects-heading">
-      <div class="section-inner">
-        <div class="section-grid">
-          <div class="section-label">
-            <h2 id="projects-heading">Projects</h2>
-            <div class="accent-bar" aria-hidden="true"></div>
-          </div>
-          <div class="section-content">
-            <div class="projects-list">
-          <div class="project-card">
-            <p class="project-number">01</p>
-            <h3 class="project-name">Hospital Indoor Navigation</h3>
-            <p class="project-summary">Prototype web app for navigating a multi-floor general hospital: 3D map, A* multi-floor routing, BLE beacon positioning, step-by-step voice guidance, and wheelchair path mode.</p>
-            <div class="skill-chips" style="margin-bottom:var(--space-4);">
-            <span class="chip">JavaScript (ES modules)</span>
-            <span class="chip">Three.js 0.186</span>
-            <span class="chip">Vite 5</span>
-            <span class="chip">HTML/CSS</span>
-            <span class="chip">Python 3</span>
-            <span class="chip">Web Bluetooth</span>
-            <span class="chip">WebSocket</span>
-            <span class="chip">Node.js</span>
+    <!-- Portfolio -->
+    <section id="portfolio" class="section" aria-labelledby="portfolio-heading">
+      <div class="container">
+        <div class="section-heading">
+          <p class="section-heading__label">Work</p>
+          <h2 id="portfolio-heading" class="section-heading__title">My Portfolio</h2>
+        </div>
+        <div id="project-grid" class="project-grid">
+          <article class="project-card reveal" data-category="web" aria-label="Employee Management">
+            <div class="project-card__stack">
+            <span class="project-card__stack-tag">Next.js 16</span>
+            <span class="project-card__stack-tag">React</span>
+            <span class="project-card__stack-tag">TypeScript</span>
+            <span class="project-card__stack-tag">Tailwind CSS</span>
+            <span class="project-card__stack-tag">Supabase</span>
             </div>
-          <ul class="project-highlights">
-              <li>Render a three-floor 3D map (Three.js) with floor switching, rotate/zoom, and room color-coding by type</li>
-              <li>Implement A* multi-floor routing with elevator/stair transitions; wheelchair mode excludes stairs from the path</li>
-              <li>Bridge BLE beacon signals via Python (bleak) + WebSocket relay with pairing code to operate outside secure context on LAN</li>
-              <li>Fall back to 2D SVG map when WebGL is unavailable (?force2d=1); include kiosk mode with enlarged text and touch targets</li>
-              <li>Build admin panel for technicians to view active beacons, assign positions on the 3D map, and record RSSI calibration data</li>
-              <li>Build Python pipeline (OpenCV, trimesh) converting floor-plan images to 3D GLB models</li>
-              <li>Deliver step-by-step voice guidance with off-route detection and signal-loss alerts</li>
-          </ul>
-          </div>
+            <h3 class="project-card__name">Employee Management</h3>
+            <p class="project-card__summary">Web app replacing paper shift rosters and Excel payroll sheets for small F&amp;B outlets. Handles shift registration, weekly scheduling, and hourly pay calculation.</p>
+          <p class="project-card__highlight">Enforce multi-layer security: route proxy + server-side layout guard (requireAuth/requireAdmin) + RLS on Postgres; migrate policies from anon to authenticated; verify anon INSERT returns 401 and anon SELECT returns empty array</p>
+            <div class="project-card__links">
+            <a href="projects/quan-ly-nhan-vien/" class="project-card__link">Details <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
             </div>
-          </div>
+          </article>
+          <article class="project-card reveal" data-category="web" aria-label="Hospital Indoor Navigation">
+            <div class="project-card__stack">
+            <span class="project-card__stack-tag">JavaScript (ES modules)</span>
+            <span class="project-card__stack-tag">Three.js 0.186</span>
+            <span class="project-card__stack-tag">Vite 5</span>
+            <span class="project-card__stack-tag">HTML/CSS</span>
+            <span class="project-card__stack-tag">Python 3</span>
+            </div>
+            <h3 class="project-card__name">Hospital Indoor Navigation</h3>
+            <p class="project-card__summary">Prototype web app for navigating a multi-floor general hospital: 3D map, A* multi-floor routing, BLE beacon positioning, step-by-step voice guidance, and wheelchair path mode.</p>
+          <p class="project-card__highlight">Render a three-floor 3D map (Three.js) with floor switching, rotate/zoom, and room color-coding by type</p>
+            <div class="project-card__links">
+            <a href="projects/hospital-indoor-navigation/" class="project-card__link">Details <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+            </div>
+          </article>
+          <article class="project-card reveal" data-category="web" aria-label="Hospital Quality Survey">
+            <div class="project-card__stack">
+            <span class="project-card__stack-tag">Next.js 16.4</span>
+            <span class="project-card__stack-tag">React 19.3</span>
+            <span class="project-card__stack-tag">TypeScript</span>
+            <span class="project-card__stack-tag">Tailwind CSS 4</span>
+            <span class="project-card__stack-tag">Supabase</span>
+            </div>
+            <h3 class="project-card__name">Hospital Quality Survey</h3>
+            <p class="project-card__summary">Patient satisfaction kiosk and quality management portal built for a Grade-I hospital. Survey flow covers department selection, criteria rating, and NPS; admin dashboard tracks KPIs, charts, and complaints.</p>
+          <p class="project-card__highlight">Resolve department-code mismatches with a multi-step resolveDepartment function (exact → prefix → name → static map); verify correctness with a custom test script without altering DB data</p>
+            <div class="project-card__links">
+            <a href="projects/hospital-quality-survey/" class="project-card__link">Details <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+            </div>
+          </article>
         </div>
       </div>
     </section>
-
-
-
     <!-- Contact -->
-    <section id="contact" aria-labelledby="contact-heading">
-      <div class="contact-inner">
-        <h2 id="contact-heading">Get in touch</h2>
-        <div class="accent-bar" aria-hidden="true" style="margin: var(--space-2) auto 0;"></div>
-        <div class="contact-links">
-          <a href="mailto:doanquochuy.dev@gmail.com" class="contact-link"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"/><path d="M3 7l9 6l9 -6"/></svg> doanquochuy.dev@gmail.com</a>
-          <a href="https://github.com/QuocHuy-Dev-FS" class="contact-link" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"/></svg> GitHub <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+    <section id="contact" class="section" aria-labelledby="contact-heading">
+      <div class="container">
+        <div class="section-heading">
+          <p class="section-heading__label">Contact</p>
+          <h2 id="contact-heading" class="section-heading__title">Get in Touch</h2>
+        </div>
+        <div class="contact-grid">
+          <div class="contact-info reveal">
+            <h3 class="contact-info__title">Let&#8217;s work together</h3>
+            <p class="contact-info__desc">Have a project in mind? Feel free to reach out.</p>
+            <div class="contact-info__links">
+          <a href="mailto:doanquochuy.dev@gmail.com" class="contact-link"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/><polyline points="3 7 12 13 21 7"/></svg> doanquochuy.dev@gmail.com</a>
+          <a href="https://github.com/QuocHuy-Dev-FS" class="contact-link" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg> GitHub <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+          <a href="https://www.linkedin.com/in/huy-%C4%91o%C3%A0n-077089432" class="contact-link" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg> LinkedIn <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+          <span class="contact-link"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Trảng Bảng, Tây Ninh</span>
+            </div>
+          </div>
+          <div class="contact-form-wrap reveal">
+            <form class="contact-form" id="contact-form" novalidate data-email="doanquochuy.dev@gmail.com">
+              <div class="form-group">
+                <label for="f-name">Name</label>
+                <input type="text" id="f-name" name="name" required autocomplete="name" aria-required="true" placeholder="Your name">
+              </div>
+              <div class="form-group">
+                <label for="f-email">Email</label>
+                <input type="email" id="f-email" name="email" required autocomplete="email" aria-required="true" placeholder="your@email.com">
+              </div>
+              <div class="form-group">
+                <label for="f-subject">Subject</label>
+                <input type="text" id="f-subject" name="subject" placeholder="Project inquiry">
+              </div>
+              <div class="form-group">
+                <label for="f-message">Message</label>
+                <textarea id="f-message" name="message" required rows="5" aria-required="true" placeholder="Tell me about your project..."></textarea>
+              </div>
+              <button type="submit" class="btn-primary">Send Message</button>
+            </form>
+            <div class="form-noscript">
+              <a href="mailto:doanquochuy.dev@gmail.com" class="btn-secondary">Email directly <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
-
   </main>
 
-  <!-- Footer -->
-  <footer id="footer" role="contentinfo">
-    <div class="footer-inner">
-      <div class="footer-left">
-        <span class="footer-name">Đoàn Quốc Huy</span>
-        <span class="footer-title">Fullstack Developer</span>
-        <div class="footer-socials">
-          <a href="mailto:doanquochuy.dev@gmail.com" aria-label="Email"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"/><path d="M3 7l9 6l9 -6"/></svg></a>
-          <a href="https://github.com/QuocHuy-Dev-FS" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"/></svg></a>
-        </div>
+    <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="footer-logo">QH</span>
+        <span class="footer-tagline">Fullstack Developer</span>
       </div>
-      <div class="footer-right">
-        <nav class="footer-nav" aria-label="Footer">
+      <nav class="footer-nav" aria-label="Footer navigation">
           <a href="#about">About</a>
           <a href="#skills">Skills</a>
-          <a href="#projects">Projects</a>
+          <a href="#portfolio">Portfolio</a>
           <a href="#contact">Contact</a>
-        </nav>
-        <p class="footer-copy">&#169; 2026 Đoàn Quốc Huy. All rights reserved.</p>
+      </nav>
+      <div class="footer-social">
+          <a href="https://github.com/QuocHuy-Dev-FS" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a>
+          <a href="https://www.linkedin.com/in/huy-%C4%91o%C3%A0n-077089432" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="mailto:doanquochuy.dev@gmail.com" aria-label="Email"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/><polyline points="3 7 12 13 21 7"/></svg></a>
       </div>
     </div>
-    <p class="footer-copy-mobile" style="text-align:center;padding-bottom:var(--space-4);">
-      &#169; 2026 Đoàn Quốc Huy. All rights reserved.
-    </p>
+    <div class="footer-copy container">
+      <p>&#169; 2026 Đoàn Quốc Huy. All rights reserved.</p>
+    </div>
   </footer>
 
   <script src="assets/site.js"></script>

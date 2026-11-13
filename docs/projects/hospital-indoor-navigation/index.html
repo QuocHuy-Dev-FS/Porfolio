@@ -6,7 +6,6 @@
   <title>Hospital Indoor Navigation — Đoàn Quốc Huy</title>
   <meta name="description" content="Prototype web app for navigating a multi-floor general hospital: 3D map, A* multi-floor routing, BLE beacon positioning, step-by-step voice guidance, and wheelchair path mode.">
   <link rel="canonical" href="https://quochuy-dev-fs.github.io/Porfolio/projects/hospital-indoor-navigation/">
-  <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Hospital Indoor Navigation — Đoàn Quốc Huy">
   <meta property="og:description" content="Prototype web app for navigating a multi-floor general hospital: 3D map, A* multi-floor routing, BLE beacon positioning, step-by-step voice guidance, and wheelchair path mode.">
@@ -16,63 +15,73 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://quochuy-dev-fs.github.io/Porfolio/assets/og-image.svg">
   <meta name="theme-color" content="#0f172a">
-  <!-- JSON-LD -->
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Đoàn Quốc Huy","url":"https://quochuy-dev-fs.github.io/Porfolio/","jobTitle":"Fullstack Developer","email":"doanquochuy.dev@gmail.com","sameAs":["https://github.com/QuocHuy-Dev-FS"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Đoàn Quốc Huy","url":"https://quochuy-dev-fs.github.io/Porfolio/","jobTitle":"Fullstack Developer","email":"doanquochuy.dev@gmail.com","sameAs":["https://github.com/QuocHuy-Dev-FS","https://www.linkedin.com/in/huy-%C4%91o%C3%A0n-077089432"]}</script>
   <link rel="stylesheet" href="../../assets/style.css">
+  <script>document.documentElement.classList.add('js-on')</script>
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to main content</a>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div class="scroll-progress" aria-hidden="true"><div class="scroll-progress__fill"></div></div>
 
-  <!-- Header -->
-  <header id="header" role="banner">
-    <div class="header-inner">
-      <button
-        id="nav-toggle"
-        class="nav-toggle"
-        aria-controls="primary-nav"
-        aria-expanded="false"
-        aria-label="Open navigation menu"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <nav id="primary-nav" aria-label="Primary">
-        <ul>
+    <header class="site-header" role="banner">
+    <nav class="nav container" aria-label="Main navigation">
+      <a href="../../#hero" class="nav-logo" aria-label="Đoàn Quốc Huy — home">QH</a>
+      <ul class="nav-links" role="list">
           <li><a href="../../#about">About</a></li>
           <li><a href="../../#skills">Skills</a></li>
-          <li><a href="../../#projects">Projects</a></li>
+          <li><a href="../../#portfolio">Portfolio</a></li>
           <li><a href="../../#contact">Contact</a></li>
-        </ul>
-      </nav>
-    </div>
+      </ul>
+      <div class="nav-actions">
+        <a href="../../#contact" class="btn-primary">Hire Me</a>
+        <button
+          class="hamburger"
+          aria-controls="nav-drawer"
+          aria-expanded="false"
+          aria-label="Open navigation menu"
+        ><span></span><span></span><span></span></button>
+      </div>
+    </nav>
   </header>
+  <div id="nav-drawer" class="nav-drawer" role="navigation" aria-label="Mobile navigation">
+    <ul>
+        <li><a href="../../#about">About</a></li>
+        <li><a href="../../#skills">Skills</a></li>
+        <li><a href="../../#portfolio">Portfolio</a></li>
+        <li><a href="../../#contact">Contact</a></li>
+    </ul>
+  </div>
 
-  <!-- Main content -->
-  <main id="main">
-    <div class="project-detail-wrap">
-      <a href="../../#projects" class="back-link">&#8592; Back to projects</a>
+  <main id="main-content">
+    <article class="project-detail container" aria-labelledby="project-h1">
+      <a href="../../#portfolio" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+        Back to Portfolio
+      </a>
 
-      <h1 class="detail-h1">Hospital Indoor Navigation</h1>
-      <p class="detail-meta">Solo — design, development, data processing, testing</p>
-      <p class="detail-summary">Prototype web app for navigating a multi-floor general hospital: 3D map, A* multi-floor routing, BLE beacon positioning, step-by-step voice guidance, and wheelchair path mode.</p>
+      <header class="project-detail__header">
+        <h1 id="project-h1" class="project-detail__h1">Hospital Indoor Navigation</h1>
+        <p class="project-detail__meta">Solo — design, development, data processing, testing</p>
+        <div class="project-detail__stack">
+          <span class="chip">JavaScript (ES modules)</span>
+          <span class="chip">Three.js 0.186</span>
+          <span class="chip">Vite 5</span>
+          <span class="chip">HTML/CSS</span>
+          <span class="chip">Python 3</span>
+          <span class="chip">Web Bluetooth</span>
+          <span class="chip">WebSocket</span>
+          <span class="chip">Node.js</span>
+        </div>
+      </header>
 
-      <!-- Stack -->
-      <h2 class="detail-section-title">Stack</h2>
-      <div class="skill-chips" style="margin-bottom:var(--space-7);">
-        <span class="chip">JavaScript (ES modules)</span>
-        <span class="chip">Three.js 0.186</span>
-        <span class="chip">Vite 5</span>
-        <span class="chip">HTML/CSS</span>
-        <span class="chip">Python 3</span>
-        <span class="chip">Web Bluetooth</span>
-        <span class="chip">WebSocket</span>
-        <span class="chip">Node.js</span>
+      <div class="project-detail__section">
+        <h2>Overview</h2>
+        <p class="project-detail__summary">Prototype web app for navigating a multi-floor general hospital: 3D map, A* multi-floor routing, BLE beacon positioning, step-by-step voice guidance, and wheelchair path mode.</p>
       </div>
 
-      <!-- Highlights -->
-      <h2 class="detail-section-title">Highlights</h2>
-      <ul class="detail-highlights">
+      <div class="project-detail__section">
+        <h2>Highlights</h2>
+        <ul class="project-detail__highlights">
           <li>Render a three-floor 3D map (Three.js) with floor switching, rotate/zoom, and room color-coding by type</li>
           <li>Implement A* multi-floor routing with elevator/stair transitions; wheelchair mode excludes stairs from the path</li>
           <li>Bridge BLE beacon signals via Python (bleak) + WebSocket relay with pairing code to operate outside secure context on LAN</li>
@@ -80,60 +89,57 @@
           <li>Build admin panel for technicians to view active beacons, assign positions on the 3D map, and record RSSI calibration data</li>
           <li>Build Python pipeline (OpenCV, trimesh) converting floor-plan images to 3D GLB models</li>
           <li>Deliver step-by-step voice guidance with off-route detection and signal-loss alerts</li>
-      </ul>
-
-      <!-- Metrics -->
-      <h2 class="detail-section-title">Metrics</h2>
-      <div class="metrics-grid">
-        <div class="metric-card">
-          <p class="metric-value">140/140</p>
-          <p class="metric-label">Automated tests passed</p>
-        </div>
-        <div class="metric-card">
-          <p class="metric-value">126</p>
-          <p class="metric-label">Sample rooms (42 per floor, 3 floors)</p>
-        </div>
-        <div class="metric-card">
-          <p class="metric-value">78 / 84</p>
-          <p class="metric-label">Wheelchair routes verified stair-free</p>
-        </div>
-        <div class="metric-card">
-          <p class="metric-value">24 + 13</p>
-          <p class="metric-label">Beacon calibration + iBeacon decode tests (Python) passed</p>
-        </div>
-        <div class="metric-card">
-          <p class="metric-value">375×667, 430×932, 768×1024, 1440×900</p>
-          <p class="metric-label">UI breakpoints tested</p>
+        </ul>
+      </div>
+      <div class="project-detail__section">
+        <h2>Metrics</h2>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <p class="metric-value">140/140</p>
+            <p class="metric-label">Automated tests passed</p>
+          </div>
+          <div class="metric-card">
+            <p class="metric-value">126</p>
+            <p class="metric-label">Sample rooms (42 per floor, 3 floors)</p>
+          </div>
+          <div class="metric-card">
+            <p class="metric-value">78 / 84</p>
+            <p class="metric-label">Wheelchair routes verified stair-free</p>
+          </div>
+          <div class="metric-card">
+            <p class="metric-value">24 + 13</p>
+            <p class="metric-label">Beacon calibration + iBeacon decode tests (Python) passed</p>
+          </div>
+          <div class="metric-card">
+            <p class="metric-value">375×667, 430×932, 768×1024, 1440×900</p>
+            <p class="metric-label">UI breakpoints tested</p>
+          </div>
         </div>
       </div>
-
-
-    </div>
+    </article>
   </main>
 
-  <!-- Footer -->
-  <footer id="footer" role="contentinfo">
-    <div class="footer-inner">
-      <div class="footer-left">
-        <span class="footer-name">Đoàn Quốc Huy</span>
-        <span class="footer-title">Fullstack Developer</span>
-        <div class="footer-socials">
-          <a href="mailto:doanquochuy.dev@gmail.com" aria-label="Email"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"/><path d="M3 7l9 6l9 -6"/></svg></a>
-          <a href="https://github.com/QuocHuy-Dev-FS" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"/></svg></a>
-        </div>
+    <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="footer-logo">QH</span>
+        <span class="footer-tagline">Fullstack Developer</span>
       </div>
-      <div class="footer-right">
-        <nav class="footer-nav" aria-label="Footer">
+      <nav class="footer-nav" aria-label="Footer navigation">
           <a href="../../#about">About</a>
-          <a href="../../#projects">Projects</a>
+          <a href="../../#skills">Skills</a>
+          <a href="../../#portfolio">Portfolio</a>
           <a href="../../#contact">Contact</a>
-        </nav>
-        <p class="footer-copy">&#169; 2026 Đoàn Quốc Huy. All rights reserved.</p>
+      </nav>
+      <div class="footer-social">
+          <a href="https://github.com/QuocHuy-Dev-FS" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a>
+          <a href="https://www.linkedin.com/in/huy-%C4%91o%C3%A0n-077089432" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="mailto:doanquochuy.dev@gmail.com" aria-label="Email"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/><polyline points="3 7 12 13 21 7"/></svg></a>
       </div>
     </div>
-    <p class="footer-copy-mobile" style="text-align:center;padding-bottom:var(--space-4);">
-      &#169; 2026 Đoàn Quốc Huy. All rights reserved.
-    </p>
+    <div class="footer-copy container">
+      <p>&#169; 2026 Đoàn Quốc Huy. All rights reserved.</p>
+    </div>
   </footer>
 
   <script src="../../assets/site.js"></script>

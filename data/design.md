@@ -1,312 +1,479 @@
-# Design Specification
+# Design Specification — Portfolio Fullstack Dev
+> Owner: ui-designer | Generated: 2026-11-13
+> Do not edit manually. See CLAUDE.md for ownership rules.
+
+---
 
 ## 1. Style Direction
 
-A monospace-first, single-page portfolio using only system fonts — clean, minimal, and fast to scan. Dark slate (`#0f172a`) grounds the light theme; a large section-heading + accent-underline pattern (derived from devportfolio MIT reference) lets recruiters parse sections in under three seconds. Accent color switches to sky-blue (`#60a5fa`) in dark mode so interactive elements remain readable without hardcoding hex values in templates — always use `var(--color-accent)`.
+A dark-first, single-page portfolio using a deep navy-to-teal gradient canvas with glassmorphism cards, cyan/emerald accent gradients, and subtle motion — fast to scan for recruiters, credible in detail for clients.  
+Typography is entirely system fonts; no CDN, no external assets.
 
 ---
 
-## 2. Section Order and Wireframe
+## 2. Color & Contrast Table (WCAG AA — calculated with Node)
 
-All sections live on one page (single-page application). Scroll position determines active nav link. Each section has `id` matching the nav anchor.
+All ratios measured against effective backgrounds. Required: ≥ 4.5:1 for body text, ≥ 3.0:1 for large text (≥ 18 px bold or ≥ 24 px regular).
 
-### 2.1 Header (sticky, `id="header"`)
+| Foreground          | Background               | Effective bg hex | Ratio  | AA (4.5) | AA-large (3.0) |
+|---------------------|--------------------------|------------------|--------|----------|----------------|
+| `--text-primary` #f8fafc   | dark bg `--bg-start` #0b1220    | #0b1220 | 17.89:1 | PASS | PASS |
+| `--text-primary` #f8fafc   | glass card `--glass-bg`         | #171e2b | 15.97:1 | PASS | PASS |
+| `--text-secondary` #94a3b8 | dark bg `--bg-start` #0b1220    | #0b1220 |  7.30:1 | PASS | PASS |
+| `--text-secondary` #94a3b8 | glass card `--glass-bg`         | #171e2b |  6.52:1 | PASS | PASS |
+| `--accent-cyan` #06b6d4    | dark bg `--bg-start` #0b1220    | #0b1220 |  7.71:1 | PASS | PASS |
+| `--accent-emerald` #10b981 | dark bg `--bg-start` #0b1220    | #0b1220 |  7.38:1 | PASS | PASS |
+| `--btn-text` #ffffff       | btn start `--btn-bg-start` #0e7490 | #0e7490 | 5.36:1 | PASS | PASS |
+| `--btn-text` #ffffff       | btn end `--btn-bg-end` #047857     | #047857 | 5.48:1 | PASS | PASS |
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│  [skip to main]  ·  About · Projects · Skills ·             │
-│                      Experience · Education · Contact        │
-└─────────────────────────────────────────────────────────────┘
-```
-
-- Fixed top, `z-index` above content.
-- Hidden at scroll-top (transparent); gains `bg: var(--color-bg) / 90%` + `backdrop-filter: blur(8px)` after scrolling 80 px (JS toggle class `.is-scrolled`).
-- Skip-link is the first focusable element, visually hidden until focused: `position: absolute; top: -9999px` → `top: 0` on `:focus`.
-- Nav links: `color: var(--color-text-muted)`, hover `var(--color-text)`. Active section link uses `color: var(--color-accent)`.
-- On `max-width < 768 px`: hamburger button toggles a full-width drawer. Nav links stack vertically.
-- One `<nav aria-label="Primary">` element.
-
-### 2.2 Hero (`id="hero"`, `<main>` starts here, contains `<h1>`)
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                                                             │
-│  Hello!                                                     │
-│                                                             │
-│  I'm  [Name]                          ← h1, accent on name  │
-│                                                             │
-│  [Title]                              ← p, text-muted       │
-│  [1-sentence summary]                 ← p                   │
-│                                                             │
-│  [Contact me ↓]   [GitHub ↗]                               │
-│                                                             │
-│  · · · decorative code-symbols pattern (aria-hidden) · · ·  │
-└─────────────────────────────────────────────────────────────┘
-```
-
-- Full viewport height on `>= 768 px`; `min-height: 100svh` fallback.
-- Radial gradient overlay: `var(--color-accent) / 25%` at top-left fading to transparent — applied only in light mode (omit in dark, or use `opacity: 0.08`).
-- `<h1>` contains name; "I'm" is in a `<span>` with normal weight; name `<span>` uses `color: var(--color-accent)`.
-- "Hello!" is a `<p>` or `<span>` above `<h1>` — not a heading.
-- Two CTA buttons: primary "Contact me" (`href="#contact"`) and secondary "GitHub" (external link, `target="_blank" rel="noopener noreferrer"`). Primary: `bg: var(--color-accent); color: var(--color-bg)`. Secondary: `border: 1px solid var(--color-border)`.
-- Social icon links at bottom of hero (email, GitHub, LinkedIn) with `aria-label`. Icons are inline SVG (no CDN). Hover: `color: var(--color-accent)`.
-- Fade-in animation for hero content; wrap in `@media (prefers-reduced-motion: no-preference)`. Without that media query, elements are immediately visible.
-
-### 2.3 About (`id="about"`)
-
-```
-┌──────────────────┬──────────────────────────────────────────┐
-│  About Me        │  [summary paragraph]                     │
-│  ────── (accent) │                                          │
-│  h2              │  [2-3 sentences max, from profile.json   │
-│                  │   person.summary]                        │
-└──────────────────┴──────────────────────────────────────────┘
-```
-
-- 12-column grid: label col = 4 cols, content col = 8 cols (stacks to 1 col on `< 1024 px`).
-- `<h2>` heading + 5 px accent underline div (`width: 75px; height: 5px; background: var(--color-accent); border-radius: var(--radius-full)`).
-- Summary text: `font-size: var(--text-lg)`; `line-height: var(--leading-relaxed)`; `color: var(--color-text-muted)`.
-
-### 2.4 Skills (`id="skills"`)
-
-```
-┌──────────────────┬──────────────────────────────────────────┐
-│  Skills          │  Frontend                                │
-│  ──────          │  [React] [Next.js] [TypeScript] …        │
-│  h2              │                                          │
-│                  │  Backend                                 │
-│                  │  [Node.js] [Express] …                   │
-│                  │                                          │
-│                  │  Database / DevOps …                     │
-└──────────────────┴──────────────────────────────────────────┘
-```
-
-- Same 4/8-col split as About.
-- Group name: `<h3>`, `font-size: var(--text-sm)`, uppercase, `letter-spacing: 0.08em`, `color: var(--color-text-muted)`.
-- Skill chip: `bg: var(--color-skill-bg); color: var(--color-skill-text); padding: var(--space-1) var(--space-3); border-radius: var(--radius-full); font-size: var(--text-sm)`.
-- Groups wrap in `<ul>` with `<li>` per chip; group container is `<div role="group" aria-labelledby="group-[name]">`.
-
-### 2.5 Projects (`id="projects"`)
-
-```
-┌──────────────────┬──────────────────────────────────────────┐
-│  Projects        │  01                                      │
-│  ──────          │  [Project Name]           [↗ or detail]  │
-│  h2              │  [summary]                               │
-│                  │  [React] [Node.js] …                     │
-│                  │  ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─     │
-│                  │  02 …                                    │
-└──────────────────┴──────────────────────────────────────────┘
-```
-
-- Same 4/8-col split.
-- Each project is a card (`<article>`). If `links.demo` or `links.repo` exists → card is wrapped in `<a>`; otherwise plain `<div>`.
-- Card: `bg: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: var(--space-6)`.
-- Hover (when interactive): `box-shadow: var(--shadow-lg); transform: translateY(-2px); border-color: var(--color-border)`. Wrap transition in `@media (prefers-reduced-motion: no-preference)`.
-- Project number: `font-size: var(--text-sm); color: var(--color-accent)`.
-- Project name: `<h3>`, `font-size: var(--text-xl); font-weight: var(--font-weight-bold)`.
-- Summary: `color: var(--color-text-muted); font-size: var(--text-base)`.
-- Stack chips: same style as skill chips.
-- External-link icon (top-right of card): 40 px circle, `bg: var(--color-skill-bg); color: var(--color-skill-text)`, SVG arrow-up-right (`aria-hidden="true"`). Visible only when card is a link.
-- Detail page (see §3).
-
-### 2.6 Experience (`id="experience"`)
-
-```
-┌──────────────────┬──────────────────────────────────────────┐
-│  Experience      │  ● [Role]               [period]        │
-│  ──────          │    [Organization]                       │
-│  h2              │    │                                    │
-│                  │    • bullet                             │
-│                  │    • bullet                             │
-│                  │    │ (connector line to next card)      │
-│                  │  ● [Role] …                             │
-└──────────────────┴──────────────────────────────────────────┘
-```
-
-- Timeline dot + connector line pattern (from reference).
-- Card: `bg: var(--color-bg); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-5)`.
-- Role: `<h3>`, `font-size: var(--text-lg); font-weight: var(--font-weight-semibold)`.
-- Org name: `color: var(--color-accent)`.
-- Period: `font-size: var(--text-xs); color: var(--color-text-muted)`.
-- Bullets: `<ul>` with `<li>`, bullet dot `4px` circle in `var(--color-text-muted)`.
-- Section omitted entirely from DOM if `experience` array is empty.
-
-### 2.7 Education (`id="education"`)
-
-Same 4/8-col grid and card pattern as Experience, without timeline connector.
-
-- Degree: `<h3>`, semibold.
-- School: `color: var(--color-accent)`.
-- Period: muted, right-aligned on `>= 480 px`.
-- Achievements as `<ul>` bullets (same style as Experience bullets).
-- Section omitted entirely if `education` array is empty.
-
-### 2.8 Contact (`id="contact"`)
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│  Get in touch                                               │
-│  ─────────────                                              │
-│                                                             │
-│  [doanquochuy.dev@gmail.com]   [GitHub ↗]   [LinkedIn ↗]   │
-└─────────────────────────────────────────────────────────────┘
-```
-
-- Full-width centered section; `bg: var(--color-bg-card)`.
-- `<h2>` heading.
-- Email as `<a href="mailto:…">`, GitHub and LinkedIn as icon+text links. All `color: var(--color-text)`, hover `var(--color-accent)`.
-- Section has role="contentinfo" wrapper? No — that is for `<footer>`. Contact is a `<section>`.
-
-### 2.9 Footer
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│  [Name]  ·  [Title]              About · Projects · Contact │
-│  [social icons]                                             │
-│  © 2025 [Name]. All rights reserved.                        │
-└─────────────────────────────────────────────────────────────┘
-```
-
-- `<footer>` element, `bg: var(--color-bg-card); border-top: 1px solid var(--color-border)`.
-- Left: name, title, social icon row.
-- Right (hidden on `< 768 px`): nav links + copyright.
-- Copyright below on mobile.
+**Note on button gradient:** The original accent cyan (#06b6d4) and emerald (#10b981) produce only 2.43:1 / 2.54:1 against white — both FAIL AA. Button background uses darker stops `--btn-bg-start: #0e7490` and `--btn-bg-end: #047857` to achieve ≥ 5.3:1. The bright accents remain for decorative/text use only.
 
 ---
 
-## 3. Project Card and Detail Page
-
-### 3.1 Project List Card (on index page)
-
-Rendered order inside each card:
-
-1. Sequential number (`01`, `02` …) — `color: var(--color-accent)`, `font-size: var(--text-sm)`
-2. Project name (`<h3>`)
-3. Summary text (1–2 sentences)
-4. Stack chip list
-5. Highlights list (if any) — prefixed `✓` bullet, `font-size: var(--text-sm)`, `color: var(--color-text-muted)`
-6. External-link icon (absolutely positioned top-right, present only when card is a link)
-
-### 3.2 Project Detail Page (`/projects/[slug]/index.html`)
-
-Page has its own `<h1>` (project name). Page structure:
+## 3. Token Reference (from `templates/tokens.css`)
 
 ```
-[← Back to projects]
-
-[h1: Project Name]
-[Role]  ·  [Period if available]
-[Summary paragraph]
-
-## Stack
-[chip list]
-
-## Highlights
-- highlight 1
-- highlight 2
-
-## Metrics  (omitted if no metrics)
-┌────────────────┬────────────────┬────────────────┐
-│  Label         │  Label         │  Label         │
-│  Value         │  Value         │  Value         │
-└────────────────┴────────────────┴────────────────┘
-
-## Links
-[Repo ↗]   [Demo ↗]
+--bg-gradient          160deg: #0b1220 → #0f172a 55% → #042f2e
+--bg-surface           #111827
+--accent-cyan          #06b6d4   (decorative, text highlights)
+--accent-emerald       #10b981   (decorative, text highlights)
+--accent-gradient      135deg: cyan → emerald
+--btn-gradient         135deg: #0e7490 → #047857  (button bg only)
+--btn-text             #ffffff
+--glass-bg             rgba(255,255,255,.05)
+--glass-border         rgba(255,255,255,.10)
+--glass-blur           12px
+--text-primary         #f8fafc
+--text-secondary       #94a3b8
+--text-muted           #64748b
+--text-on-accent       #0b1220
+--font-sans            system ui-sans-serif stack
+--font-mono            ui-monospace / Cascadia Code / Consolas stack
+--space-1 … --space-24 0.25 rem … 6 rem
+--radius-sm…--radius-full
+--shadow-sm/md/lg
+--glow-cyan / --glow-emerald / --glow-hero
+--header-h             4rem (64 px)
+--content-max          1200px
+--z-progress           50  (scroll progress bar)
+--duration-fast/base/slow/slower
 ```
 
-- Back link: `<a href="/#projects">← Back to projects</a>`, `color: var(--color-text-muted)`, hover `var(--color-text)`.
-- Metric cards: 3-col grid on `>= 768 px`, 1-col on mobile. Each: `bg: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-4)`. Value: `font-size: var(--text-2xl); font-weight: var(--font-weight-bold); color: var(--color-accent)`. Label: `font-size: var(--text-xs); color: var(--color-text-muted)`.
-- Detail page also includes `<title>` and `<meta name="description">` derived from `project.name` + `project.summary`.
+---
+
+## 4. Layout — 9 Sections (top → bottom)
+
+### 4.0 Scroll Progress Bar
+- Fixed `position: fixed; top: 0; right: 0; height: 100vh; width: 3px; z-index: var(--z-progress)`.
+- Inner fill div driven by JS `scrollY / (scrollHeight - innerHeight) * 100%`.
+- Background: `var(--accent-gradient)` on the fill strip.
+- Class: `.scroll-progress` (outer), `.scroll-progress__fill` (inner).
+
+### 4.1 Header (fixed, glassmorphism)
+```
+<header class="site-header" role="banner">
+  <nav class="nav container" aria-label="Main navigation">
+    [logo/name wordmark left]   [nav links center/right]   [CTA button far right]
+  </nav>
+</header>
+```
+- `position: fixed; top: 0; width: 100%; z-index: var(--z-sticky)`.
+- Background: `var(--glass-bg); backdrop-filter: blur(var(--glass-blur)); border-bottom: 1px solid var(--glass-border)`.
+- Logo: site owner initials "QH" styled with `--accent-gradient` as background-clip text, `font-weight: 700`.
+- Nav links: `color: var(--text-secondary)`, hover → `var(--text-primary)` + `color` transition `var(--duration-base)`.
+- Active link: underline or left-border in `--accent-cyan`.
+- CTA button: `.btn-primary` (see §6).
+- Mobile (< 768 px): hamburger icon (SVG inline), nav collapses into a glass drawer sliding from top or side.
+- Skip-link: `<a class="skip-link" href="#main-content">Skip to content</a>` as first element in `<body>`; visible on focus only.
+
+### 4.2 Hero (full viewport, 2-column)
+```
+<section id="hero" class="hero section" aria-labelledby="hero-heading">
+  [col-left]  heading + tagline + badges + CTA buttons
+  [col-right] .hero-avatar (circle with initials + floating badges)
+</section>
+```
+**Left column:**
+- `<h1 id="hero-heading" class="hero-name">` — name text, `font-size: clamp(2.5rem, 6vw, 4.5rem)`, animated with `gradient-shift` (background-clip text, `--accent-gradient` 300% wide).
+- `<p class="hero-title">` — job title, `font-size: var(--text-xl)`, `color: var(--text-secondary)`.
+- `<p class="hero-summary">` — one-sentence intro, `color: var(--text-secondary)`.
+- `<div class="hero-badges">` — up to 4 tech badges from `skills[0].items[0..3]`; each `.badge` pill: `background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-primary); padding: var(--space-1) var(--space-3); border-radius: var(--radius-full); animation: float-enhanced 4s ease-in-out infinite;` staggered delays 0 / 0.5 / 1 / 1.5 s.
+- Availability badge (render only if `person.available === true`): green dot + "Available for work".
+- CTA row: `.btn-primary` (Contact), `.btn-secondary` (View Projects), optional `.btn-ghost` (Download CV — render only if `person.resume` exists).
+
+**Right column:**
+- `.hero-avatar-wrap` — `position: relative; width: clamp(220px, 30vw, 320px); aspect-ratio: 1`.
+- `.hero-avatar` — circle, background `var(--accent-gradient)`; `animation: pulse-glow-enhanced 3s ease-in-out infinite`.
+- `.hero-avatar__initials` — text "QH" (from `person.name`), `font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 800; color: var(--bg-start)`.
+- `.hero-floating-badge` ×4 — absolute positioned around circle, same pill style as hero-badges, `animation: float-enhanced`.
+- Decorative background blur circles: 2 × `position: absolute` divs with `--glow-hero` radial gradient, `pointer-events: none; aria-hidden`.
+
+**Layout:**
+- 1024 px+: CSS grid `grid-template-columns: 1fr 1fr; gap: var(--space-16)`, left col first.
+- 768–1023 px: same grid but `1fr 1fr` gap reduced.
+- < 768 px: single column, avatar below text, centered.
+- Minimum 100 dvh height; `padding-block: calc(var(--header-h) + var(--space-16)) var(--space-16)`.
+
+### 4.3 About (render always)
+```
+<section id="about" class="about section" aria-labelledby="about-heading">
+  <h2 id="about-heading">About</h2>
+  [text column]  [trait grid column]
+</section>
+```
+**Text column:**
+- `<p>` per item in `person.about[]`. Render only if `person.about` array exists and is non-empty; otherwise render `person.summary` as a single paragraph.
+- If `person.tagline` exists: `<p class="about-tagline">` styled with `--accent-gradient` background-clip text.
+
+**Trait grid (render only if `traits[]` non-empty):**
+- 2–3 col grid of `.trait-card` items (glass card style).
+- Each: SVG icon (inline, 24×24) + short label text.
+- Max 6 traits.
+
+**Stats row (render only if `stats[]` non-empty, each item has `source`):**
+- Horizontal flex row of `.stat-item`: large number in accent gradient + small label.
+
+### 4.4 Skills & Tech Stack (render always)
+```
+<section id="skills" class="skills section" aria-labelledby="skills-heading">
+  <h2 id="skills-heading">Skills & Tech Stack</h2>
+  [skill group tabs or headings]
+  [icon grid per group]
+  [skill level bars — only if skillLevels[] non-empty]
+</section>
+```
+**Icon grid:**
+- Per `skills[]` group: `<h3>` heading + `.skill-grid` flex/grid of `.skill-item` pills.
+- Each pill: glass card, monospace label, optional inline SVG icon.
+
+**Skill level bars (render only if `skillLevels[]` non-empty, each has `source`):**
+- `.skill-bar` row: label left, percentage right, animated fill bar on reveal.
+- Bar fill uses `--accent-gradient`; `width: 0` initially → JS sets `--skill-pct` and adds `.is-visible` class → CSS animation `progress-fill`.
+
+### 4.5 Portfolio (render always, at least 1 public project)
+```
+<section id="portfolio" class="portfolio section" aria-labelledby="portfolio-heading">
+  <h2 id="portfolio-heading">Portfolio</h2>
+  <div class="portfolio-filter" role="tablist" aria-label="Filter projects">
+    [All] [Web] [Mobile] [API] [Open Source] — render only categories that exist
+  </div>
+  <div class="project-grid">
+    [.project-card × n]
+  </div>
+</section>
+```
+**Filter tabs:**
+- Render only tab buttons for categories present in public projects + "All".
+- Active tab: `--accent-gradient` underline or background.
+- JS toggles `data-hidden` attribute on cards; hidden cards get `display: none`.
+- When only 1 category or no `category` on any project: hide filter row entirely.
+
+**Project card `.project-card` spec:**
+```
+[stack badge row]
+[project name — <h3>]
+[summary — 1-2 sentences]
+[key highlight (first item of highlights[], if present)]
+[tech stack pills]
+[link row: Demo ↗  |  Repo ↗]
+```
+- Glass card: `background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-xl); backdrop-filter: blur(var(--glass-blur)); padding: var(--space-6)`.
+- Hover: `background: var(--glass-bg-hover); border-color: var(--border-accent); box-shadow: var(--glow-cyan); transform: translateY(-4px); transition: all var(--duration-slow) var(--ease-out)`.
+- Card links open in new tab with `rel="noopener noreferrer"`.
+- Render only projects with `visibility: "public"`.
+
+**Project detail page** (`/projects/<slug>/`):
+```
+<article>
+  <h1>[project name]</h1>
+  <p class="meta">[role] · [stack comma-list]</p>
+  <section>
+    <h2>Overview</h2>
+    <p>[summary]</p>
+  </section>
+  <section>  <!-- render only if highlights[] non-empty -->
+    <h2>Highlights</h2>
+    <ul>[highlights[].text with source as <cite> or link]</ul>
+  </section>
+  <section>  <!-- render only if metrics[] non-empty, each has source -->
+    <h2>Metrics</h2>
+    <dl>[label / value / source]</dl>
+  </section>
+  <footer class="project-links">
+    [Demo link if exists]  [Repo link if exists]
+  </footer>
+</article>
+```
+- Has own `<h1>`, correct heading order (h1→h2→h3).
+- Back link to `/#portfolio`.
+
+### 4.6 Testimonials (render only if `testimonials[]` non-empty)
+```
+<section id="testimonials" class="testimonials section" aria-labelledby="testimonials-heading">
+  <h2 id="testimonials-heading">What Clients Say</h2>
+  <div class="testimonials-track" role="list">
+    [.testimonial-card × n]
+  </div>
+  [prev/next buttons or dots navigation]
+</section>
+```
+**`.testimonial-card`:**
+- Glass card, slight 3D tilt on hover (`transform: perspective(600px) rotateY(4deg)` or rotateX).
+- Quote text in `var(--text-primary)`, author bold, role in `var(--text-secondary)`.
+- Opening `"` mark in `--accent-gradient` background-clip.
+- Carousel: auto-advance every 5 s (paused on hover, paused if `prefers-reduced-motion`); JS controls.
+- CSS: `overflow: hidden` on track, slides use `transform: translateX` for smooth transition.
+
+### 4.7 Pricing (render only if `pricing[]` non-empty)
+```
+<section id="pricing" class="pricing section" aria-labelledby="pricing-heading">
+  <h2 id="pricing-heading">Services & Pricing</h2>
+  <div class="pricing-grid">
+    [.pricing-card × n]  <!-- popular card has .pricing-card--popular -->
+  </div>
+  [pricingPerks list — render only if pricingPerks[] non-empty]
+</section>
+```
+**`.pricing-card`:**
+- Glass card; popular card: `border-color: var(--border-accent); box-shadow: var(--glow-cyan)`.
+- Popular badge: `.badge-popular` pill with `--btn-gradient` background.
+- Price: large number + unit, name + description above.
+- Features: `<ul>` with checkmark SVG icon per item.
+- CTA button: `.btn-primary` for popular, `.btn-secondary` for others.
+
+### 4.8 Contact (render always)
+```
+<section id="contact" class="contact section" aria-labelledby="contact-heading">
+  <h2 id="contact-heading">Get in Touch</h2>
+  <div class="contact-grid">
+    [info column]   [form column]
+  </div>
+</section>
+```
+**Info column:** email link, GitHub link, LinkedIn link (only if URL is clean/encoded), location.
+
+**Form column:**
+```html
+<form class="contact-form" id="contact-form" novalidate>
+  <input type="text"  name="name"    id="f-name"    required autocomplete="name">
+  <input type="email" name="email"   id="f-email"   required autocomplete="email">
+  <textarea           name="message" id="f-message" required rows="5"></textarea>
+  <button type="submit" class="btn-primary">Send</button>
+</form>
+<noscript>
+  <a href="mailto:[email]" class="btn-primary">Email directly</a>
+</noscript>
+```
+- JS intercepts submit → builds `mailto:` URL → `window.location.href`.
+- `<noscript>` fallback: direct mailto link (required for JS-disabled accessibility).
+- Labels: `<label for="...">` on every input (not placeholder-only).
+
+### 4.9 Footer
+```
+<footer class="site-footer" role="contentinfo">
+  <div class="container footer-inner">
+    [left: logo/name + tagline]
+    [center: nav links]
+    [right: social icon links]
+  </div>
+  <p class="footer-copy">[copyright year] [name]</p>
+</footer>
+```
+- Background: `--bg-surface`; top border `1px solid var(--border-subtle)`.
+- Social icons: SVG inline, `aria-label` on each `<a>`.
 
 ---
 
-## 4. Responsive Breakpoints
+## 5. Responsive Breakpoints
 
-| Breakpoint | Width    | Key Changes |
-|------------|----------|-------------|
-| Default    | 320 px+  | Single column, full-width cards, no horizontal scroll |
-| sm         | 360 px   | Slightly larger padding; nav drawer closes on link tap |
-| md         | 768 px   | Header nav visible; Hero full-viewport-height; 2-col footer |
-| lg         | 1200 px  | 4/8-col section grid active; max-width cap engaged |
+| Name   | Min-width | Key changes |
+|--------|-----------|-------------|
+| xs     | 320 px    | Minimum supported; no horizontal scroll; single column; font-size clamped |
+| sm     | 375 px    | Slight padding increase |
+| md     | 768 px    | 2-column hero; nav visible; 2-col skill grid |
+| lg     | 1024 px   | Full 2-col hero with avatar; 3-col project grid |
+| xl     | 1440 px   | Max content width applied; wider padding |
 
-No element causes horizontal scroll at 320 px: all grids use `grid-template-columns: 1fr`, images use `max-width: 100%`, code snippets use `overflow-x: auto`.
-
-Section horizontal padding: `var(--space-5)` (mobile) → `var(--space-7)` (768 px+) → `var(--space-8)` (1200 px+).
-
----
-
-## 5. Accessibility Standards
-
-| Requirement | Implementation |
-|-------------|----------------|
-| Skip link | First child of `<body>`: `<a class="skip-link" href="#main">Skip to main content</a>`. Visually hidden until `:focus`. |
-| Single `<h1>` per page | Index: hero name. Project detail: project name. |
-| Heading order | h1 → h2 (section) → h3 (card title / group). No skipped levels. |
-| Minimum contrast 4.5:1 | All text pairs verified (see §6). `--color-accent` as text is only used where it passes (see note below). |
-| Focus ring | `outline: 2px solid var(--color-accent); outline-offset: 2px` on all interactive elements. Remove browser default only after setting custom ring (`outline: none` is never used alone). |
-| `prefers-reduced-motion` | Fade-in and hover-translate animations wrapped in `@media (prefers-reduced-motion: no-preference)`. Without it, elements are immediately visible and stationary. |
-| `prefers-color-scheme: dark` | Full token set in `tokens.css`. |
-| Images | All decorative SVGs have `aria-hidden="true"`. Meaningful images have `alt`. |
-| Icon-only links | All icon-only `<a>` elements have `aria-label`. |
-| Form / mailto | Contact section uses `<a href="mailto:…">` — no `<form>` needed for static site. |
-
-**Note on accent as text color:** In light mode `--color-accent` is `#2563eb` (passes 5.17:1 on `#ffffff`). In dark mode `--color-accent` is `#60a5fa` (passes 7.02:1 on `#0f172a`). Never use `--color-accent` as text on `--color-bg-card` in dark mode without verification — it still passes (5.75:1 ≥ 4.5:1).
+**No-scroll-at-320 rules:**
+- `max-width: 100%` on `.container`.
+- `word-break: break-word` on headings.
+- Hero avatar: `max-width: min(280px, 80vw)`.
+- All grid templates fall back to `1fr` at 320 px.
 
 ---
 
-## 6. Contrast Ratio Table (WCAG AA — minimum 4.5:1 for normal text)
+## 6. Component Specs
 
-> All hex values below are taken directly from `templates/tokens.css` and re-verified with `node -e` on 2026-11-12. Every pair passes WCAG AA.
-
-### Light Mode
-
-| Foreground | Background | Pair Description | Ratio | Pass? |
-|------------|------------|------------------|-------|-------|
-| `#0f172a` (`--color-text`) | `#ffffff` (`--color-bg`) | Body text on page bg | 17.85:1 | AA |
-| `#64748b` (`--color-text-muted`) | `#ffffff` (`--color-bg`) | Muted text on page bg | 4.76:1 | AA |
-| `#64748b` (`--color-text-muted`) | `#f8fafc` (`--color-bg-card`) | Muted text on card bg | 4.55:1 | AA |
-| `#0f172a` (`--color-text`) | `#f8fafc` (`--color-bg-card`) | Body text on card bg | 17.06:1 | AA |
-| `#2563eb` (`--color-accent`) | `#ffffff` (`--color-bg`) | Accent text on page bg | 5.17:1 | AA |
-| `#2563eb` (`--color-accent`) | `#f8fafc` (`--color-bg-card`) | Accent text on card bg | 4.94:1 | AA |
-| `#f1f5f9` (`--color-skill-text`) | `#1e293b` (`--color-skill-bg`) | Skill chip text on chip bg | 13.35:1 | AA |
-
-### Dark Mode
-
-| Foreground | Background | Pair Description | Ratio | Pass? |
-|------------|------------|------------------|-------|-------|
-| `#f1f5f9` (`--color-text`) | `#0f172a` (`--color-bg`) | Body text on page bg | 16.30:1 | AA |
-| `#94a3b8` (`--color-text-muted`) | `#0f172a` (`--color-bg`) | Muted text on page bg | 6.96:1 | AA |
-| `#94a3b8` (`--color-text-muted`) | `#1e293b` (`--color-bg-card`) | Muted text on card bg | 5.71:1 | AA |
-| `#f1f5f9` (`--color-text`) | `#1e293b` (`--color-bg-card`) | Body text on card bg | 13.35:1 | AA |
-| `#60a5fa` (`--color-accent`) | `#0f172a` (`--color-bg`) | Accent text on page bg | 7.02:1 | AA |
-| `#60a5fa` (`--color-accent`) | `#1e293b` (`--color-bg-card`) | Accent text on card bg | 5.75:1 | AA |
-| `#f1f5f9` (`--color-skill-text`) | `#334155` (`--color-skill-bg`) | Skill chip text on chip bg | 9.45:1 | AA |
-
-**No pairs failed.**
-
----
-
-## 7. Font Stack
-
+### `.btn-primary`
 ```css
-font-family: var(--font-mono);
-/* expands to:
-   ui-monospace, "Cascadia Code", "Source Code Pro",
-   Menlo, Consolas, "DejaVu Sans Mono", monospace
-*/
+background: var(--btn-gradient);
+color: var(--btn-text);           /* #fff, contrast ≥ 5.36:1 */
+padding: var(--space-3) var(--space-6);
+border-radius: var(--radius-full);
+font-weight: 600;
+font-size: var(--text-sm);
+border: none; cursor: pointer;
+position: relative; overflow: hidden;
+transition: transform var(--duration-base), box-shadow var(--duration-base);
+```
+- Shimmer on hover: `::before` pseudo with `var(--shimmer-bg)`, `animation: shimmer 1.2s var(--ease-in-out)` triggered by `button:hover::before`.
+- Hover: `transform: translateY(-2px); box-shadow: var(--glow-emerald)`.
+- Focus-visible: `outline: 2px solid var(--accent-cyan); outline-offset: 3px` (never `outline: none` without replacement).
+
+### `.btn-secondary`
+```css
+background: transparent;
+border: 1px solid var(--border-strong);
+color: var(--text-primary);
+/* same padding / radius as btn-primary */
+```
+- Hover: `background: var(--glass-bg); border-color: var(--border-accent)`.
+
+### `.btn-ghost`
+```css
+background: transparent; border: none;
+color: var(--accent-cyan);
+text-decoration: underline;
 ```
 
-No external font imports. No CDN. `<link rel="preconnect">` tags are absent. The monospace aesthetic matches the developer-portfolio context and renders without layout shift.
+### Glass card base
+```css
+background: var(--glass-bg);
+border: 1px solid var(--glass-border);
+border-radius: var(--radius-xl);
+backdrop-filter: blur(var(--glass-blur));
+-webkit-backdrop-filter: blur(var(--glass-blur));
+```
+
+### `.container`
+```css
+width: 100%;
+max-width: var(--content-max);
+margin-inline: auto;
+padding-inline: clamp(var(--space-4), 5vw, var(--space-16));
+```
+
+### `.section`
+```css
+padding-block: var(--section-py);
+```
+
+### `.skip-link`
+```css
+position: absolute; top: -100%; left: var(--space-4);
+background: var(--btn-gradient); color: var(--btn-text);
+padding: var(--space-2) var(--space-4);
+border-radius: 0 0 var(--radius-md) var(--radius-md);
+z-index: calc(var(--z-progress) + 10);
+transition: top var(--duration-fast);
+```
+- `:focus { top: 0; }` — appears at top on keyboard focus.
 
 ---
 
-## 8. Summary for frontend-builder
+## 7. Hover & Focus States (all interactive elements)
 
-- Import `tokens.css` as the first stylesheet in every template.
-- Use only CSS custom properties from `tokens.css` for colors, spacing, type, and radius — no hardcoded hex or pixel values except `0`, `100%`, or viewport units.
-- Sections are conditionally rendered: if the data array is empty, omit the section and its nav link.
-- The `<main id="main">` landmark wraps everything from Hero through Contact (inclusive). Header and Footer are outside `<main>`.
-- All interactive states (hover, focus, active) must have visible style changes. Focus ring: `outline: 2px solid var(--color-accent); outline-offset: 2px`.
-- Build output goes to `docs/` via `scripts/build.mjs`; do not edit `docs/` by hand.
+| Element | Hover | Focus-visible |
+|---------|-------|---------------|
+| Nav link | color → `--text-primary`, underline | `outline: 2px solid --accent-cyan; outline-offset: 2px` |
+| `.btn-primary` | translateY(-2px) + glow-emerald | same outline |
+| `.btn-secondary` | glass-bg + border-accent | same outline |
+| `.project-card` | translateY(-4px) + glass-bg-hover + glow-cyan + border-accent | outline on focusable child link |
+| `.testimonial-card` | 3D tilt perspective | — |
+| Social icon link | color → --accent-cyan | outline |
+| Form input/textarea | `border-color: --border-accent; box-shadow: 0 0 0 3px rgba(6,182,212,.2)` | same as hover |
+
+**Rule:** Never remove outline without providing an equivalent visible focus indicator.
+
+---
+
+## 8. Animation / Motion Rules
+
+### Keyframes defined in `tokens.css`
+| Keyframe | Usage | Duration | Iteration |
+|----------|-------|----------|-----------|
+| `gradient-shift` | Hero name text background-position | 4 s | infinite |
+| `float-enhanced` | Hero badges, hero avatar badges | 4–6 s staggered | infinite |
+| `pulse-glow-enhanced` | Hero avatar circle | 3 s | infinite |
+| `shimmer` | Button ::before on hover | 1.2 s | 1 |
+| `reveal` | Scroll-triggered section children | 0.6 s | 1 |
+| `slide-in-left` | About text, skill bars on reveal | 0.5 s | 1 |
+| `scale-in` | Project cards on reveal | 0.5 s staggered | 1 |
+| `progress-fill` | Skill level bars | 1 s | 1 |
+| `spin-slow` | Optional decorative ring | 20 s | infinite |
+
+### Scroll reveal (JS-driven)
+- `IntersectionObserver` with `threshold: 0.15`.
+- On enter: add class `.is-visible` to `.reveal` elements → CSS plays `reveal` keyframe.
+- Stagger children with `--reveal-delay: calc(var(--i, 0) * 80ms)` custom property set via JS.
+
+### prefers-reduced-motion
+- `tokens.css` already sets `animation-duration: 0.01ms; transition-duration: 0.01ms` globally when motion is reduced.
+- JS must also check `window.matchMedia('(prefers-reduced-motion: reduce)').matches` before starting carousel auto-advance and scroll-to-section smooth scroll.
+- Skill bar animation: set width directly (no transition) when motion reduced.
+
+---
+
+## 9. Accessibility Checklist for frontend-builder
+
+- [ ] `<html lang="en">` (or `site.locale` value).
+- [ ] One `<h1>` per page; heading order h1→h2→h3, never skip levels.
+- [ ] Skip-link `<a class="skip-link" href="#main-content">Skip to content</a>` as first `<body>` child.
+- [ ] `<main id="main-content">` wraps sections 4.2–4.8.
+- [ ] All images/SVG icons: `aria-hidden="true"` if decorative; `alt` or `aria-label` if informational.
+- [ ] Interactive elements (buttons, links): visible focus ring (see §7).
+- [ ] Carousel controls: `aria-label="Previous"` / `aria-label="Next"`, `aria-live="polite"` on slide region.
+- [ ] Tab filter: `role="tablist"`, buttons `role="tab"`, `aria-selected`, `aria-controls`.
+- [ ] Form: `<label for>` on every input; error messages via `aria-describedby`; required fields `aria-required="true"`.
+- [ ] Color contrast: all pairs ≥ 4.5:1 (see §2 table).
+- [ ] No motion without `prefers-reduced-motion` guard.
+- [ ] `<noscript>` mailto fallback in Contact form.
+
+---
+
+## 10. Conditional Render Summary
+
+| Section / Element | Renders when |
+|---|---|
+| Availability badge (Hero) | `person.available === true` |
+| Download CV button | `person.resume` key exists in profile.json |
+| About extended paragraphs | `person.about[]` exists and non-empty |
+| Tagline | `person.tagline` exists |
+| Trait grid | `traits[]` exists and non-empty |
+| Stats row | `stats[]` exists, non-empty, each item has `source` |
+| Skill level bars | `skillLevels[]` exists, non-empty, each item has `source` |
+| Portfolio filter tabs | ≥ 2 distinct `category` values among public projects |
+| Testimonials section | `testimonials[]` exists and non-empty |
+| Pricing section | `pricing[]` exists and non-empty |
+| pricingPerks list | `pricingPerks[]` exists and non-empty |
+| LinkedIn link | `person.links.linkedin` present AND URL contains no unencoded non-ASCII |
+| Resume link in Footer | same as Download CV button |
+
+---
+
+## 11. CSS Class & Variable Checklist for frontend-builder
+
+**Layout classes:** `.skip-link`, `.site-header`, `.nav`, `.container`, `.main-content`, `.section`, `.site-footer`, `.footer-inner`, `.footer-copy`
+
+**Hero:** `.hero`, `.hero-name`, `.hero-title`, `.hero-summary`, `.hero-badges`, `.badge`, `.hero-avatar-wrap`, `.hero-avatar`, `.hero-avatar__initials`, `.hero-floating-badge`, `.hero-deco`
+
+**Buttons:** `.btn-primary`, `.btn-secondary`, `.btn-ghost`
+
+**About:** `.about`, `.about-tagline`, `.trait-grid`, `.trait-card`, `.stats-row`, `.stat-item`
+
+**Skills:** `.skills`, `.skill-group`, `.skill-grid`, `.skill-item`, `.skill-bars`, `.skill-bar`, `.skill-bar__fill`, `.is-visible`
+
+**Portfolio:** `.portfolio`, `.portfolio-filter`, `.filter-btn`, `.filter-btn--active`, `.project-grid`, `.project-card`, `.project-card__stack`, `.project-card__name`, `.project-card__summary`, `.project-card__highlight`, `.project-card__tech`, `.project-card__links`
+
+**Testimonials:** `.testimonials`, `.testimonials-track`, `.testimonial-card`, `.testimonial-quote`, `.testimonial-author`, `.testimonials-nav`
+
+**Pricing:** `.pricing`, `.pricing-grid`, `.pricing-card`, `.pricing-card--popular`, `.badge-popular`, `.pricing-features`
+
+**Contact:** `.contact`, `.contact-grid`, `.contact-info`, `.contact-form`
+
+**Progress bar:** `.scroll-progress`, `.scroll-progress__fill`
+
+**Utilities:** `.reveal` (pre-reveal state), `.is-visible` (post-reveal), `.gradient-text` (`background: var(--accent-gradient); -webkit-background-clip: text; color: transparent`)
+
+**Key CSS variables used in templates:**
+`--accent-gradient`, `--btn-gradient`, `--btn-text`, `--glass-bg`, `--glass-bg-hover`, `--glass-border`, `--glass-blur`, `--border-accent`, `--glow-cyan`, `--glow-hero`, `--text-primary`, `--text-secondary`, `--font-sans`, `--font-mono`, `--radius-xl`, `--radius-full`, `--space-*`, `--duration-base`, `--duration-slow`, `--ease-out`, `--z-sticky`, `--z-progress`, `--header-h`, `--content-max`, `--section-py`, `--skill-pct`
